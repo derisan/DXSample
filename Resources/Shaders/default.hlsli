@@ -1,3 +1,8 @@
+cbuffer cbOffset : register(b0)
+{
+    float4 offset : packoffset(c0);
+}
+
 struct VS_INPUT
 {
     float3 position : POSITION;
@@ -14,7 +19,7 @@ PS_INPUT VS_Main(VS_INPUT input)
 {
     PS_INPUT output;
     
-    output.position = float4(input.position, 1.0f);
+    output.position = float4(input.position, 1.0f) + offset;
     output.color = input.color;
     
     return output;

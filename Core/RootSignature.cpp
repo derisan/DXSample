@@ -3,7 +3,10 @@
 
 void RootSignature::Init(ComPtr<ID3D12Device> device)
 {
-	D3D12_ROOT_SIGNATURE_DESC sigDesc = CD3DX12_ROOT_SIGNATURE_DESC(D3D12_DEFAULT);
+	CD3DX12_ROOT_PARAMETER params[1];
+	params[0].InitAsConstants(4, 0, 0, D3D12_SHADER_VISIBILITY_VERTEX);
+
+	D3D12_ROOT_SIGNATURE_DESC sigDesc = CD3DX12_ROOT_SIGNATURE_DESC(_countof(params), params);
 	sigDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 
 	ComPtr<ID3DBlob> sigBlob = nullptr;
