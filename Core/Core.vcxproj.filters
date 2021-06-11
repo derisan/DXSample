@@ -42,6 +42,9 @@
     <ClInclude Include="Shader.h">
       <Filter>Resources</Filter>
     </ClInclude>
+    <ClInclude Include="..\vendor\inc\DirectXTex\DirectXTex.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CorePch.cpp">
@@ -72,6 +75,9 @@
   <ItemGroup>
     <None Include="..\Resources\Shaders\default.hlsli">
       <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\vendor\inc\DirectXTex\DirectXTex.inl">
+      <Filter>Utils</Filter>
     </None>
   </ItemGroup>
 </Project>

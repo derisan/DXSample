@@ -11,6 +11,8 @@
 
 
 #include "d3dx12.h"
+#include "DirectXTex/DirectXTex.h"
+#include "DirectXTex/DirectXTex.inl"
 #include <d3d12.h>
 #include <wrl.h>
 #include <d3dcompiler.h>
@@ -27,6 +29,12 @@ using namespace Microsoft::WRL;
 #pragma comment(lib, "dxgi")
 #pragma comment(lib, "dxguid")
 #pragma comment(lib, "d3dcompiler")
+
+#ifdef _DEBUG
+	#pragma comment(lib, "DirectXTexd.lib")
+#else
+	#pragma comment(lib, "DirectXTex.lib")
+#endif
 
 
 using int8 = __int8;

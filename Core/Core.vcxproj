@@ -79,10 +79,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)bin\</OutDir>
+    <IncludePath>$(SolutionDir)vendor\inc\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)vendor\lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\</OutDir>
+    <IncludePath>$(SolutionDir)vendor\inc\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)vendor\lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -155,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\vendor\inc\DirectXTex\DirectXTex.h" />
     <ClInclude Include="CommandQueue.h" />
     <ClInclude Include="CorePch.h" />
     <ClInclude Include="d3dx12.h" />
@@ -182,6 +187,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resources\Shaders\default.hlsli" />
+    <None Include="..\vendor\inc\DirectXTex\DirectXTex.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
