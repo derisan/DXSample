@@ -55,4 +55,14 @@ struct WindowInfo
 	bool	bWindowed; 
 };
 
+struct Vertex
+{
+	vec3 Position;
+	vec4 Color;
+};
+
 extern std::unique_ptr<class Engine> gEngine;
+
+#define DEVICE gEngine->GetDevice()->GetDevice()
+#define CMD_LIST gEngine->GetCmdQueue()->GetCmdList()
+#define ROOT_SIGNATURE gEngine->GetRootSignature()->GetRootSignature()

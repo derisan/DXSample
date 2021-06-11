@@ -12,20 +12,12 @@ void Engine::Init(const WindowInfo& info)
 	mDevice = std::make_shared<Device>();
 	mCmdQueue = std::make_shared<CommandQueue>();
 	mSwapChain = std::make_shared<SwapChain>();
-	mDescHeap = std::make_shared<DescriptorHeap>();
+	mRootSignature = std::make_shared<RootSignature>();
 	
 	mDevice->Init();
-	mCmdQueue->Init(mDevice->GetDevice(), mSwapChain, mDescHeap);
-	mSwapChain->Init(info, mDevice->GetFactory(), mCmdQueue->GetCmdQueue());
-	mDescHeap->Init(mDevice->GetDevice(), mSwapChain);
-}
-
-void Engine::Render()
-{
-	renderBegin();
-
-
-	renderEnd();
+	mCmdQueue->Init(mDevice->GetDevice(), mSwapChain);
+	mSwapChain->Init(info, mDevice->GetDevice(), mDevice->GetFactory(), mCmdQueue->GetCmdQueue());
+	mRootSignature->Init(mDevice->GetDevice());
 }
 
 void Engine::ResizeWindow(int32 width, int32 height)
@@ -38,12 +30,12 @@ void Engine::ResizeWindow(int32 width, int32 height)
 	::SetWindowPos(mWindow.hWnd, 0, 100, 100, width, height, 0);
 }
 
-void Engine::renderBegin()
+void Engine::RenderBegin()
 {
 	mCmdQueue->RenderBegin(mViewport, mScissorRect);
 }
 
-void Engine::renderEnd()
+void Engine::RenderEnd()
 {
 	mCmdQueue->RenderEnd();
 }

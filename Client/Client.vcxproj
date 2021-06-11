@@ -47,11 +47,13 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir)Core\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)bin\;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)bin\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(SolutionDir)Core\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)bin\;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)bin\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

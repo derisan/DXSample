@@ -1,17 +1,15 @@
 #include "CorePch.h"
 #include "CommandQueue.h"
-#include "SwapChain.h"
-#include "DescriptorHeap.h"
+#include "Engine.h"
 
 CommandQueue::~CommandQueue()
 {
 	::CloseHandle(mFenceEvent);
 }
 
-void CommandQueue::Init(ComPtr<ID3D12Device> device, std::shared_ptr<SwapChain> swapChain, std::shared_ptr<DescriptorHeap> descHeap)
+void CommandQueue::Init(ComPtr<ID3D12Device> device, std::shared_ptr<SwapChain> swapChain)
 {
 	mSwapChain = swapChain;
-	mDescHeap = descHeap;
 
 	D3D12_COMMAND_QUEUE_DESC queueDesc = {};
 	queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
@@ -46,16 +44,17 @@ void CommandQueue::RenderBegin(const D3D12_VIEWPORT& viewport, const D3D12_RECT&
 	mCmdList->Reset(mCmdAlloc.Get(), nullptr);
 
 	D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
-		mSwapChain->GetCurrentBackBufferResource().Get(),
+		mSwapChain->GetCurrentBackBuffer().Get(),
 		D3D12_RESOURCE_STATE_PRESENT,
 		D3D12_RESOURCE_STATE_RENDER_TARGET); 
 
 	mCmdList->ResourceBarrier(1, &barrier);
 
+	mCmdList->SetGraphicsRootSignature(ROOT_SIGNATURE.Get());
 	mCmdList->RSSetViewports(1, &viewport);
 	mCmdList->RSSetScissorRects(1, &scissorRect);
 
-	D3D12_CPU_DESCRIPTOR_HANDLE backBufferView = mDescHeap->GetBackBufferView();
+	D3D12_CPU_DESCRIPTOR_HANDLE backBufferView = mSwapChain->GetCurrentBackBufferView();
 	mCmdList->ClearRenderTargetView(backBufferView, Colors::LightCyan, 0, nullptr);
 	mCmdList->OMSetRenderTargets(1, &backBufferView, false, nullptr);
 }
@@ -63,7 +62,7 @@ void CommandQueue::RenderBegin(const D3D12_VIEWPORT& viewport, const D3D12_RECT&
 void CommandQueue::RenderEnd()
 {
 	D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
-		mSwapChain->GetCurrentBackBufferResource().Get(),
+		mSwapChain->GetCurrentBackBuffer().Get(),
 		D3D12_RESOURCE_STATE_RENDER_TARGET,
 		D3D12_RESOURCE_STATE_PRESENT);
 
