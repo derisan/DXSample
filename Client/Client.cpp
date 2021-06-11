@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "Client.h"
+#include "Game.h"
 
 #define MAX_LOADSTRING 100
 
@@ -10,6 +11,7 @@
 HINSTANCE hInst;                                // current instance
 WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
+WindowInfo gWindowInfo;
 
 // Forward declarations of functions included in this code module:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -42,6 +44,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     MSG msg;
 
+    gWindowInfo.Width = 800;
+    gWindowInfo.Height = 600;
+    gWindowInfo.bWindowed = true;
+
+    std::unique_ptr<Game> game = std::make_unique<Game>();
+    game->Init(gWindowInfo);
+
     // Main message loop:
     while (true)
     {
@@ -58,6 +67,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                 DispatchMessage(&msg);
             }
         }
+
+        game->Run();
     }
 
     return (int) msg.wParam;
@@ -112,6 +123,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    {
       return FALSE;
    }
+
+   gWindowInfo.hWnd = hWnd;
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
