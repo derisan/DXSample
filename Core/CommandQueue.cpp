@@ -19,10 +19,19 @@ void CommandQueue::Init(ComPtr<ID3D12Device> device, std::shared_ptr<SwapChain> 
 	
 	device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&mCmdAlloc));
 	device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, mCmdAlloc.Get(), nullptr, IID_PPV_ARGS(&mCmdList));
-	mCmdList->Close();
-
+	
 	device->CreateFence(0, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&mFence));
 	mFenceEvent = ::CreateEvent(nullptr, false, false, nullptr);
+}
+
+void CommandQueue::FlushResCmdQueue()
+{
+	mCmdList->Close();
+
+	ID3D12CommandList* cmdLists[] = { mCmdList.Get() };
+	mCmdQueue->ExecuteCommandLists(_countof(cmdLists), cmdLists);
+
+	WaitSync();
 }
 
 void CommandQueue::WaitSync()

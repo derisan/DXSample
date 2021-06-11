@@ -2,6 +2,7 @@
 #include "Mesh.h"
 #include "Engine.h"
 
+
 void Mesh::Init(const std::vector<Vertex>& vertices, const std::vector<uint32>& indices)
 {
 	mVertexCount = vertices.size();
@@ -51,6 +52,10 @@ void Mesh::Render()
 
 	vec4 offset{ 0.0f, 0.0f, 0.0f, 0.0f };
 	CMD_LIST->SetGraphicsRoot32BitConstants(0, 4, &offset, 0);
+
+	ID3D12DescriptorHeap* ppHeaps[] = { mTexture->GetSrvHeap().Get() };
+	CMD_LIST->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
+	CMD_LIST->SetGraphicsRootDescriptorTable(1, mTexture->GetSrvGpuHandle());
 
 	CMD_LIST->DrawIndexedInstanced(mIndexCount, 1, 0, 0, 0);
 }

@@ -45,6 +45,9 @@
     <ClInclude Include="..\vendor\inc\DirectXTex\DirectXTex.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CorePch.cpp">
@@ -69,6 +72,9 @@
       <Filter>Resources</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
   </ItemGroup>

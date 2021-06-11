@@ -9,6 +9,7 @@ public:
 	~CommandQueue();
 
 	void Init(ComPtr<ID3D12Device> device, std::shared_ptr<SwapChain> swapChain);
+	void FlushResCmdQueue();
 	void WaitSync();
 
 	void RenderBegin(const D3D12_VIEWPORT& viewport, const D3D12_RECT& scissorRect);

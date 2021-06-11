@@ -8,6 +8,8 @@
 #include <array>
 #include <list>
 #include <map>
+#include <filesystem>
+namespace fs = std::filesystem;
 
 
 #include "d3dx12.h"
@@ -66,7 +68,7 @@ struct WindowInfo
 struct Vertex
 {
 	vec3 Position;
-	vec4 Color;
+	vec2 UV;
 };
 
 extern std::unique_ptr<class Engine> gEngine;

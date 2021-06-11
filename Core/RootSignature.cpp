@@ -3,11 +3,19 @@
 
 void RootSignature::Init(ComPtr<ID3D12Device> device)
 {
-	CD3DX12_ROOT_PARAMETER params[1];
+	D3D12_DESCRIPTOR_RANGE ranges[1];
+	ranges[0].BaseShaderRegister = 0;
+	ranges[0].NumDescriptors = 1;
+	ranges[0].OffsetInDescriptorsFromTableStart = 0;
+	ranges[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+	ranges[0].RegisterSpace = 0;
+	
+	CD3DX12_ROOT_PARAMETER params[2];
 	params[0].InitAsConstants(4, 0, 0, D3D12_SHADER_VISIBILITY_VERTEX);
+	params[1].InitAsDescriptorTable(_countof(ranges), ranges, D3D12_SHADER_VISIBILITY_PIXEL);
 
-	D3D12_ROOT_SIGNATURE_DESC sigDesc = CD3DX12_ROOT_SIGNATURE_DESC(_countof(params), params);
-	sigDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+	D3D12_ROOT_SIGNATURE_DESC sigDesc = CD3DX12_ROOT_SIGNATURE_DESC(_countof(params), params, 1,
+		&CD3DX12_STATIC_SAMPLER_DESC(0), D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 
 	ComPtr<ID3DBlob> sigBlob = nullptr;
 	ComPtr<ID3DBlob> errBlob = nullptr;

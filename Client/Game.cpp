@@ -4,6 +4,8 @@
 
 std::unique_ptr<Mesh> mesh = std::make_unique<Mesh>();
 std::unique_ptr<Shader> shader = std::make_unique<Shader>();
+std::shared_ptr<Texture> texture = std::make_shared<Texture>();
+
 
 void Game::Init(const WindowInfo& info)
 {
@@ -11,13 +13,13 @@ void Game::Init(const WindowInfo& info)
 
 	std::vector<Vertex> vertices(4);
 	vertices[0].Position = vec3(-0.5f, -0.5f, 0.5f);
-	vertices[0].Color = vec4(1.f, 0.f, 0.f, 1.f);
+	vertices[0].UV = vec2(0.0f, 1.0f);
 	vertices[1].Position = vec3(-0.5f, 0.5f, 0.5f);
-	vertices[1].Color = vec4(0.f, 1.0f, 0.f, 1.f);
+	vertices[1].UV = vec2(0.0f, 0.0f);
 	vertices[2].Position = vec3(0.5f, 0.5f, 0.5f);
-	vertices[2].Color = vec4(0.f, 0.f, 1.f, 1.f);
+	vertices[2].UV = vec2(1.0f, 0.0f);
 	vertices[3].Position = vec3(0.5f, -0.5f, 0.5f);
-	vertices[3].Color = vec4(0.f, 1.f, 1.f, 1.f);
+	vertices[3].UV = vec2(1.0f, 1.0f);
 
 	std::vector<uint32> indices;
 	{
@@ -33,6 +35,8 @@ void Game::Init(const WindowInfo& info)
 
 	mesh->Init(vertices, indices);
 	shader->Init(L"..//Resources//Shaders//default.hlsli");
+	texture->Init(L"..//Resources//Textures//veigar.jpg");
+	mesh->SetTexture(texture);
 }
 
 void Game::Run()
