@@ -5,6 +5,7 @@ void SwapChain::Init(const WindowInfo& info, ComPtr<ID3D12Device> device, ComPtr
 {
 	createSwapChain(info, factory, cmdQueue);
 	createRTV(device);
+	createDSV(info, device);
 }
 
 void SwapChain::Present()
@@ -64,4 +65,28 @@ void SwapChain::createRTV(ComPtr<ID3D12Device> device)
 		mRtvHandles[i] = CD3DX12_CPU_DESCRIPTOR_HANDLE(rtvHeapStart, i * mRtvIncrementSize);
 		device->CreateRenderTargetView(mRenderTargets[i].Get(), nullptr, mRtvHandles[i]);
 	}
+}
+
+void SwapChain::createDSV(const WindowInfo& info, ComPtr<ID3D12Device> device)
+{
+	D3D12_RESOURCE_DESC desc = CD3DX12_RESOURCE_DESC::Tex2D(mDsvFormat, info.Width, info.Height);
+	desc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
+
+	device->CreateCommittedResource(
+		&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
+		D3D12_HEAP_FLAG_NONE,
+		&desc,
+		D3D12_RESOURCE_STATE_DEPTH_WRITE,
+		&CD3DX12_CLEAR_VALUE(mDsvFormat, 1.0f, 0),
+		IID_PPV_ARGS(&mDsvBuffer));
+
+	D3D12_DESCRIPTOR_HEAP_DESC heapDesc = {};
+	heapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
+	heapDesc.NumDescriptors = 1;
+	heapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
+
+	device->CreateDescriptorHeap(&heapDesc, IID_PPV_ARGS(&mDsvHeap));
+
+	mDsvCpuHeapStart = mDsvHeap->GetCPUDescriptorHandleForHeapStart();
+	device->CreateDepthStencilView(mDsvBuffer.Get(), nullptr, mDsvCpuHeapStart);
 }

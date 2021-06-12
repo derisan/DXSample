@@ -50,8 +50,7 @@ void Mesh::Render()
 	CMD_LIST->IASetVertexBuffers(0, 1, &mVertexBufferView);
 	CMD_LIST->IASetIndexBuffer(&mIndexBufferView);
 
-	vec4 offset{ 0.0f, 0.0f, 0.0f, 0.0f };
-	CMD_LIST->SetGraphicsRoot32BitConstants(0, 4, &offset, 0);
+	CMD_LIST->SetGraphicsRoot32BitConstants(0, 4, &mOffset, 0);
 
 	ID3D12DescriptorHeap* ppHeaps[] = { mTexture->GetSrvHeap().Get() };
 	CMD_LIST->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);

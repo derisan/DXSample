@@ -9,6 +9,7 @@ public:
 	void Render();
 
 	void SetTexture(std::shared_ptr<Texture> texture) { mTexture = texture; }
+	void SetOffset(const vec4& offset) { mOffset = offset; }
 
 private:
 	ComPtr<ID3D12Resource> mVertexBuffer = nullptr;
@@ -20,5 +21,7 @@ private:
 	uint32 mIndexCount = 0;
 
 	std::shared_ptr<Texture> mTexture = nullptr;
+
+	vec4 mOffset = {};
 };
 
