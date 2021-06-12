@@ -18,6 +18,9 @@ void Engine::Init(const WindowInfo& info)
 	mCmdQueue->Init(mDevice->GetDevice(), mSwapChain);
 	mSwapChain->Init(info, mDevice->GetDevice(), mDevice->GetFactory(), mCmdQueue->GetCmdQueue());
 	mRootSignature->Init(mDevice->GetDevice());
+
+	mTimer->Init();
+	mInput->Init(info.hWnd);
 }
 
 void Engine::ResizeWindow(int32 width, int32 height)
@@ -30,6 +33,15 @@ void Engine::ResizeWindow(int32 width, int32 height)
 	::SetWindowPos(mWindow.hWnd, 0, 100, 100, width, height, 0);
 }
 
+void Engine::showFPS()
+{
+	uint32 fps = mTimer->GetFPS();
+
+	WCHAR text[100] = L"";
+	::wsprintf(text, L"FPS : %d", fps);
+	::SetWindowText(mWindow.hWnd, text);
+}
+
 void Engine::RenderBegin()
 {
 	mCmdQueue->RenderBegin(mViewport, mScissorRect);
@@ -38,4 +50,12 @@ void Engine::RenderBegin()
 void Engine::RenderEnd()
 {
 	mCmdQueue->RenderEnd();
+}
+
+void Engine::Update()
+{
+	mInput->Update();
+	mTimer->Update();
+
+	showFPS();
 }

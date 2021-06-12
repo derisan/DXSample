@@ -3,7 +3,6 @@
 #include "Engine.h"
 
 std::unique_ptr<Mesh> mesh = std::make_unique<Mesh>();
-std::unique_ptr<Mesh> mesh2 = std::make_unique<Mesh>();
 std::unique_ptr<Shader> shader = std::make_unique<Shader>();
 std::shared_ptr<Texture> texture = std::make_shared<Texture>();
 
@@ -39,19 +38,29 @@ void Game::Init(const WindowInfo& info)
 	texture->Init(L"..//Resources//Textures//veigar.jpg");
 	mesh->SetTexture(texture);
 	mesh->SetOffset(vec4(0.25f, -0.5f, 0.0f, 0.0f));
-	
-	mesh2->Init(vertices, indices);
-	mesh2->SetOffset(vec4(-0.25f, 0.0f, 0.2f, 0.0f));
-	mesh2->SetTexture(texture);
 }
 
 void Game::Run()
 {
+	gEngine->Update();
+
 	gEngine->RenderBegin();
 
+	static vec4 offset = {};
+
+
+	if (INPUT->IsButtonHold(KEY_TYPE::W))
+		offset.y += 1.f * DELTA_TIME;
+	if (INPUT->IsButtonHold(KEY_TYPE::S))
+		offset.y -= 1.f * DELTA_TIME;
+	if (INPUT->IsButtonHold(KEY_TYPE::A))
+		offset.x -= 1.f * DELTA_TIME;
+	if (INPUT->IsButtonHold(KEY_TYPE::D))
+		offset.x += 1.f * DELTA_TIME;
+
+	mesh->SetOffset(offset);
 	shader->Update();
 	mesh->Render();
-	mesh2->Render();
 
 	gEngine->RenderEnd();
 }

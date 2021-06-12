@@ -76,3 +76,5 @@ extern std::unique_ptr<class Engine> gEngine;
 #define DEVICE gEngine->GetDevice()->GetDevice()
 #define CMD_LIST gEngine->GetCmdQueue()->GetCmdList()
 #define ROOT_SIGNATURE gEngine->GetRootSignature()->GetRootSignature()
+#define INPUT gEngine->GetInput()
+#define DELTA_TIME gEngine->GetTimer()->GetDeltaTime()
