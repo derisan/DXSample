@@ -22,9 +22,12 @@ void Input::Update()
 		return;
 	}
 
+	BYTE keys[KEY_TYPE_COUNT] = {};
+	::GetKeyboardState(keys);
+
 	for (uint32 key = 0; key < KEY_TYPE_COUNT; key++)
 	{
-		if (::GetAsyncKeyState(key) & 0x8000)
+		if (keys[key] & 0x80)
 		{
 			KEY_STATE& state = mKeyStates[key];
 

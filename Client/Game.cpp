@@ -2,10 +2,10 @@
 #include "Game.h"
 #include "Engine.h"
 
-std::unique_ptr<Mesh> mesh = std::make_unique<Mesh>();
-std::unique_ptr<Shader> shader = std::make_unique<Shader>();
+std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
+std::shared_ptr<Shader> shader = std::make_shared<Shader>();
 std::shared_ptr<Texture> texture = std::make_shared<Texture>();
-
+std::shared_ptr<Material> material = std::make_shared<Material>();
 
 void Game::Init(const WindowInfo& info)
 {
@@ -34,10 +34,11 @@ void Game::Init(const WindowInfo& info)
 	}
 
 	mesh->Init(vertices, indices);
+	mesh->SetOffset(vec4(0.25f, -0.5f, 0.0f, 0.0f));
 	shader->Init(L"..//Resources//Shaders//default.hlsli");
 	texture->Init(L"..//Resources//Textures//veigar.jpg");
-	mesh->SetTexture(texture);
-	mesh->SetOffset(vec4(0.25f, -0.5f, 0.0f, 0.0f));
+	material->Init(shader, texture);
+	mesh->SetMaterial(material);
 }
 
 void Game::Run()
@@ -59,7 +60,6 @@ void Game::Run()
 		offset.x += 1.f * DELTA_TIME;
 
 	mesh->SetOffset(offset);
-	shader->Update();
 	mesh->Render();
 
 	gEngine->RenderEnd();

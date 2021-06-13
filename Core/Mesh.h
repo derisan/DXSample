@@ -1,6 +1,7 @@
 #pragma once
 
 class Texture;
+class Material;
 
 class Mesh
 {
@@ -8,8 +9,8 @@ public:
 	void Init(const std::vector<Vertex>& vertices, const std::vector<uint32>& indices);
 	void Render();
 
-	void SetTexture(std::shared_ptr<Texture> texture) { mTexture = texture; }
 	void SetOffset(const vec4& offset) { mOffset = offset; }
+	void SetMaterial(std::shared_ptr<Material> material) { mMaterial = std::move(material); }
 
 private:
 	ComPtr<ID3D12Resource> mVertexBuffer = nullptr;
@@ -20,7 +21,7 @@ private:
 	D3D12_INDEX_BUFFER_VIEW mIndexBufferView = {};
 	uint32 mIndexCount = 0;
 
-	std::shared_ptr<Texture> mTexture = nullptr;
+	std::shared_ptr<Material> mMaterial = nullptr;
 
 	vec4 mOffset = {};
 };

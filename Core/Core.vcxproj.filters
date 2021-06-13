@@ -54,6 +54,9 @@
     <ClInclude Include="Input.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CorePch.cpp">
@@ -88,6 +91,9 @@
     </ClCompile>
     <ClCompile Include="Input.cpp">
       <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

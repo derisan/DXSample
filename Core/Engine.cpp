@@ -13,12 +13,13 @@ void Engine::Init(const WindowInfo& info)
 	mCmdQueue = std::make_shared<CommandQueue>();
 	mSwapChain = std::make_shared<SwapChain>();
 	mRootSignature = std::make_shared<RootSignature>();
+	mInput = std::make_shared<Input>();
+	mTimer = std::make_shared<Timer>();
 	
 	mDevice->Init();
 	mCmdQueue->Init(mDevice->GetDevice(), mSwapChain);
 	mSwapChain->Init(info, mDevice->GetDevice(), mDevice->GetFactory(), mCmdQueue->GetCmdQueue());
 	mRootSignature->Init(mDevice->GetDevice());
-
 	mTimer->Init();
 	mInput->Init(info.hWnd);
 }

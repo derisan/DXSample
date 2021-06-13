@@ -4,7 +4,7 @@ class Shader
 {
 public:
 	void Init(const std::wstring& path);
-	void Update();
+	void Render();
 
 private:
 	

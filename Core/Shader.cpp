@@ -48,7 +48,7 @@ void Shader::Init(const std::wstring& path)
 	DEVICE->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&mPipelineState));
 }
 
-void Shader::Update()
+void Shader::Render()
 {
 	CMD_LIST->SetPipelineState(mPipelineState.Get());
 }

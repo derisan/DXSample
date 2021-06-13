@@ -49,12 +49,9 @@ void Mesh::Render()
 	CMD_LIST->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	CMD_LIST->IASetVertexBuffers(0, 1, &mVertexBufferView);
 	CMD_LIST->IASetIndexBuffer(&mIndexBufferView);
-
 	CMD_LIST->SetGraphicsRoot32BitConstants(0, 4, &mOffset, 0);
 
-	ID3D12DescriptorHeap* ppHeaps[] = { mTexture->GetSrvHeap().Get() };
-	CMD_LIST->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
-	CMD_LIST->SetGraphicsRootDescriptorTable(1, mTexture->GetSrvGpuHandle());
+	mMaterial->Render();
 
 	CMD_LIST->DrawIndexedInstanced(mIndexCount, 1, 0, 0, 0);
 }

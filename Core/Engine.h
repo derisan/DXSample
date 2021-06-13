@@ -9,6 +9,7 @@
 #include "Texture.h"
 #include "Timer.h"
 #include "Input.h"
+#include "Material.h"
 
 class Engine
 {
@@ -41,7 +42,7 @@ private:
 	std::shared_ptr<SwapChain> mSwapChain = nullptr;
 	std::shared_ptr<RootSignature> mRootSignature = nullptr;
 
-	std::shared_ptr<Timer> mTimer = std::make_shared<Timer>();
-	std::shared_ptr<Input> mInput = std::make_shared<Input>();
+	std::shared_ptr<Timer> mTimer = nullptr;
+	std::shared_ptr<Input> mInput = nullptr;
 };
 
