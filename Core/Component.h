@@ -1,12 +1,16 @@
-#pragma once
+#pragma once	
 
 class GameObject;
 class Transform;
+class Camera;
 
 enum class COMPONENT_TYPE : uint8
 {
 	TRANSFORM,
 	MESH_RENDERER,
+	CAMERA,
+
+	// MONO_BEHAIVOUR should be last...
 	MONO_BEHAVIOUR,
 	END
 };
@@ -34,7 +38,7 @@ public:
 protected:
 	std::shared_ptr<GameObject> GetOwner();
 	std::shared_ptr<Transform> GetTransform();
-
+	
 private:
 	friend class GameObject;
 	void SetOwner(std::shared_ptr<GameObject> owner) { mOwner = owner; }

@@ -3,6 +3,7 @@
 #include "Component.h"
 
 class Transform;
+class Camera;
 class MonoBehaviour;
 
 class GameObject : public std::enable_shared_from_this<GameObject>
@@ -12,18 +13,19 @@ public:
 	virtual ~GameObject() = default;
 
 	void Init();
-
 	void Awake();
 	void Start();
 	void Update();
 	void LateUpdate();
 	void FinalUpdate();
-
 	void Render();
 
 	std::shared_ptr<Transform> GetTransform();
 
 	void AddComponent(std::shared_ptr<Component> component);
+
+private:
+	std::shared_ptr<Component> getComponentByType(COMPONENT_TYPE type);
 
 private:
 	std::array<std::shared_ptr<Component>, FIXED_COMPONENT_COUNT> mComponents;

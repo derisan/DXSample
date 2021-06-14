@@ -5,6 +5,7 @@
 #include "Transform.h"
 #include "GameObject.h"
 #include "Engine.h"
+#include "Camera.h"
 
 MeshRenderer::MeshRenderer()
 	: Component(COMPONENT_TYPE::MESH_RENDERER)
@@ -20,9 +21,10 @@ MeshRenderer::~MeshRenderer()
 void MeshRenderer::Render()
 {
 	CMD_LIST->SetGraphicsRoot32BitConstants(ROOT_PARAMS_WORLD, 16, &GetTransform()->GetLocalToWorldMatrix(), 0);
-	CMD_LIST->SetGraphicsRoot32BitConstants(ROOT_PARAMS_VIEWPROJ, 16, &matrix::Identity, 0);
-	CMD_LIST->SetGraphicsRoot32BitConstants(ROOT_PARAMS_VIEWPROJ, 16, &matrix::Identity, 16);
 
+	auto viewProj = Camera::sViewMatrix * Camera::sProjectionMatrix;
+	CMD_LIST->SetGraphicsRoot32BitConstants(ROOT_PARAMS_VIEWPROJ, 32, &viewProj, 0);
+	
 	mMaterial->Render();
 	mMesh->Render();
 }

@@ -95,6 +95,7 @@ public:								\
 #define TIMER GET_SINGLETON(Timer)
 #define DELTA_TIME gEngine->GetTimer()->GetDeltaTime()
 
+#define ASPECT_RATIO gEngine->GetAspectRatio()
 
 #define ROOT_PARAMS_WORLD		0
 #define ROOT_PARAMS_VIEWPROJ	1

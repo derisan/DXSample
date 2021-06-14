@@ -7,6 +7,9 @@
 #include "Material.h"
 #include "Texture.h"
 #include "Shader.h"
+#include "Camera.h"
+#include "Transform.h"
+#include "TestCameraScript.h"
 
 void SceneManager::Update()
 {
@@ -40,6 +43,7 @@ void SceneManager::LoadScene(const std::wstring& sceneName)
 
 std::shared_ptr<Scene> SceneManager::LoadTestScene()
 {
+#pragma region Veigar
 	std::vector<Vertex> vertices(4);
 	vertices[0].Position = vec3(-0.5f, -0.5f, 0.5f);
 	vertices[0].UV = vec2(0.0f, 1.0f);
@@ -86,8 +90,19 @@ std::shared_ptr<Scene> SceneManager::LoadTestScene()
 	obj->AddComponent(meshRenderer);
 
 	std::shared_ptr<Scene> scene = std::make_shared<Scene>();
-
 	scene->AddGameObject(obj);
+#pragma endregion 
+
+
+#pragma region Camera
+	std::shared_ptr<GameObject> camera = std::make_shared<GameObject>();
+	camera->Init();
+	camera->AddComponent(std::make_shared<Camera>());
+	camera->AddComponent(std::make_shared<TestCameraScript>());
+	camera->GetTransform()->SetLocalPosition(vec3(0.0f, 0.0f, -5.0f));
+	scene->AddGameObject(camera);
+#pragma endregion
+
 
 	return scene;
 }

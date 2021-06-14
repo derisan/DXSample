@@ -22,6 +22,9 @@
     <Filter Include="Resource">
       <UniqueIdentifier>{5ea21c4f-a7a6-4d59-9778-d470767e74e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\TestScript">
+      <UniqueIdentifier>{aeb0d3b8-fea8-44c6-907f-8e172437a2fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CorePch.h">
@@ -90,6 +93,12 @@
     <ClInclude Include="SimpleMath.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="TestCameraScript.h">
+      <Filter>GameObject\TestScript</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CorePch.cpp">
@@ -151,6 +160,12 @@
     </ClCompile>
     <ClCompile Include="SimpleMath.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="TestCameraScript.cpp">
+      <Filter>GameObject\TestScript</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

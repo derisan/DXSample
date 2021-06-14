@@ -20,6 +20,10 @@ public:
 
 	void ResizeWindow(int32 width, int32 height);
 
+	float GetWindowWidth() const { return static_cast<float>(mWindow.Width); }
+	float GetWindowHeight() const { return static_cast<float>(mWindow.Height); }
+	float GetAspectRatio() const { return static_cast<float>(mWindow.Width) / mWindow.Height; }
+
 	std::shared_ptr<Device> GetDevice() { return mDevice; }
 	std::shared_ptr<CommandQueue> GetCmdQueue() { return mCmdQueue; }
 	std::shared_ptr<SwapChain> GetSwapChain() { return mSwapChain; }

@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "MonoBehaviour.h"
 #include "MeshRenderer.h"
+#include "Camera.h"
 
 void GameObject::Init()
 {
@@ -94,10 +95,15 @@ void GameObject::Render()
 	}
 }
 
-std::shared_ptr<Transform> GameObject::GetTransform()
+std::shared_ptr<Component> GameObject::getComponentByType(COMPONENT_TYPE type)
 {
 	uint8 index = static_cast<uint8>(COMPONENT_TYPE::TRANSFORM);
-	return std::static_pointer_cast<Transform>(mComponents[index]);
+	return mComponents[index];
+}
+
+std::shared_ptr<Transform> GameObject::GetTransform()
+{
+	return std::static_pointer_cast<Transform>(getComponentByType(COMPONENT_TYPE::TRANSFORM));
 }
 
 void GameObject::AddComponent(std::shared_ptr<Component> component)
@@ -114,4 +120,3 @@ void GameObject::AddComponent(std::shared_ptr<Component> component)
 		mScripts.push_back(std::static_pointer_cast<MonoBehaviour>(component));
 	}
 }
-
