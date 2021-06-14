@@ -1,8 +1,10 @@
 #include "CorePch.h"
 #include "Transform.h"
+#include "Engine.h"
 
 Transform::Transform()
 	: Component(COMPONENT_TYPE::TRANSFORM)
+	, mUploadBuffer(DEVICE.Get(), 1, true)
 {
 
 }
@@ -28,4 +30,6 @@ void Transform::FinalUpdate()
 	{
 		mWorldMatrix *= parent->GetLocalToWorldMatrix();
 	}
+
+	mUploadBuffer.CopyData(0, mWorldMatrix);
 }

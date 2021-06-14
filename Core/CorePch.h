@@ -28,6 +28,7 @@ using namespace DirectX;
 using namespace DirectX::PackedVector;
 using namespace Microsoft::WRL;
 
+#include "UploadBuffer.h"
 
 #pragma comment(lib, "d3d12")
 #pragma comment(lib, "dxgi")

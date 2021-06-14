@@ -25,6 +25,8 @@ public:
 	void SetLocalScale(const vec3& scale) { mLocalScale = scale; }
 	void SetParent(std::shared_ptr<Transform> parent) { mParent = parent; }
 
+	D3D12_GPU_VIRTUAL_ADDRESS GetWorldCbGpuAddr() const { return mUploadBuffer.Resource()->GetGPUVirtualAddress(); }
+
 private:
     vec3 mLocalPosition = {};
     vec3 mLocalRotation = {};
@@ -34,4 +36,6 @@ private:
     matrix mWorldMatrix = {};
 
     std::weak_ptr<Transform> mParent;
+
+	UploadBuffer<matrix> mUploadBuffer;
 };

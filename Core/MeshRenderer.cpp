@@ -20,7 +20,7 @@ MeshRenderer::~MeshRenderer()
 
 void MeshRenderer::Render()
 {
-	CMD_LIST->SetGraphicsRoot32BitConstants(ROOT_PARAMS_WORLD, 16, &GetTransform()->GetLocalToWorldMatrix(), 0);
+	CMD_LIST->SetGraphicsRootConstantBufferView(ROOT_PARAMS_WORLD, GetTransform()->GetWorldCbGpuAddr());
 
 	auto viewProj = Camera::sViewMatrix * Camera::sProjectionMatrix;
 	CMD_LIST->SetGraphicsRoot32BitConstants(ROOT_PARAMS_VIEWPROJ, 32, &viewProj, 0);

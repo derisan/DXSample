@@ -15,12 +15,14 @@ struct VS_INPUT
 {
     float3 position : POSITION;
     float2 uv : TEXCOORD;
+    float3 normal : NORMAL;
+    float3 tangent : TANGENT;
 };
 
 struct PS_INPUT
 {
     float4 position : SV_Position;
-    float2 uv : TEXCOORD;
+    float2 uv : TEXCOORD;  
 };
 
 PS_INPUT VS_Main(VS_INPUT input)
