@@ -34,6 +34,14 @@ void Scene::LateUpdate()
 	}
 }
 
+void Scene::FinalUpdate()
+{
+	for (const auto& obj : mGameObjects)
+	{
+		obj->FinalUpdate();
+	}
+}
+
 void Scene::Render()
 {
 	for (const auto& obj : mGameObjects)

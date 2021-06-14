@@ -10,9 +10,10 @@ void RootSignature::Init(ComPtr<ID3D12Device> device)
 	ranges[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
 	ranges[0].RegisterSpace = 0;
 	
-	CD3DX12_ROOT_PARAMETER params[2];
-	params[0].InitAsConstants(4, 0, 0, D3D12_SHADER_VISIBILITY_VERTEX);
-	params[1].InitAsDescriptorTable(_countof(ranges), ranges, D3D12_SHADER_VISIBILITY_PIXEL);
+	CD3DX12_ROOT_PARAMETER params[3];
+	params[ROOT_PARAMS_WORLD].InitAsConstants(16, 0, 0, D3D12_SHADER_VISIBILITY_VERTEX);
+	params[ROOT_PARAMS_VIEWPROJ].InitAsConstants(32, 1, 0, D3D12_SHADER_VISIBILITY_VERTEX);
+	params[ROOT_PARAMS_TEXTURE].InitAsDescriptorTable(_countof(ranges), ranges, D3D12_SHADER_VISIBILITY_PIXEL);
 
 	D3D12_ROOT_SIGNATURE_DESC sigDesc = CD3DX12_ROOT_SIGNATURE_DESC(_countof(params), params, 1,
 		&CD3DX12_STATIC_SAMPLER_DESC(0), D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);

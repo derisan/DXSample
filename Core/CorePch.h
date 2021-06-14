@@ -15,6 +15,8 @@ namespace fs = std::filesystem;
 #include "d3dx12.h"
 #include "DirectXTex/DirectXTex.h"
 #include "DirectXTex/DirectXTex.inl"
+#include "SimpleMath.h"
+#include "SimpleMath.inl"
 #include <d3d12.h>
 #include <wrl.h>
 #include <d3dcompiler.h>
@@ -47,10 +49,10 @@ using uint8 = unsigned __int8;
 using uint16 = unsigned __int16;
 using uint32 = unsigned __int32;
 using uint64 = unsigned __int64;
-using vec2 = XMFLOAT2;
-using vec3 = XMFLOAT3;
-using vec4 = XMFLOAT4;
-using matrix = XMFLOAT4X4;
+using vec2 = SimpleMath::Vector2;
+using vec3 = SimpleMath::Vector3;
+using vec4 = SimpleMath::Vector4;
+using matrix = SimpleMath::Matrix;
 
 enum
 {
@@ -94,5 +96,6 @@ public:								\
 #define DELTA_TIME gEngine->GetTimer()->GetDeltaTime()
 
 
-
-
+#define ROOT_PARAMS_WORLD		0
+#define ROOT_PARAMS_VIEWPROJ	1
+#define ROOT_PARAMS_TEXTURE		2

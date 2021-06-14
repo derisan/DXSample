@@ -26,6 +26,7 @@ public:
 	virtual void Start() {};
 	virtual void Update() {};
 	virtual void LateUpdate() {};
+	virtual void FinalUpdate() {};
 
 	COMPONENT_TYPE GetType() const { return mType; }
 	bool IsValid() const { return mOwner.expired() == false; }

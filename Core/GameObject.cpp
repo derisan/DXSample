@@ -73,6 +73,17 @@ void GameObject::LateUpdate()
 	}
 }
 
+void GameObject::FinalUpdate()
+{
+	for (auto& component : mComponents)
+	{
+		if (component)
+		{
+			component->FinalUpdate();
+		}
+	}
+}
+
 void GameObject::Render()
 {
 	uint8 index = static_cast<uint8>(COMPONENT_TYPE::MESH_RENDERER);

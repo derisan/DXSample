@@ -17,6 +17,7 @@ void SceneManager::Update()
 
 	mActiveScene->Update();
 	mActiveScene->LateUpdate();
+	mActiveScene->FinalUpdate();
 }
 
 void SceneManager::Render()

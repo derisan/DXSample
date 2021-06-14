@@ -12,7 +12,7 @@ void Texture::Render()
 {
 	ID3D12DescriptorHeap* ppHeaps[] = { mSrvHeap.Get() };
 	CMD_LIST->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
-	CMD_LIST->SetGraphicsRootDescriptorTable(1, mSrvHeap->GetGPUDescriptorHandleForHeapStart());
+	CMD_LIST->SetGraphicsRootDescriptorTable(ROOT_PARAMS_TEXTURE, mSrvHeap->GetGPUDescriptorHandleForHeapStart());
 }
 
 void Texture::createTexture(const std::wstring& path)

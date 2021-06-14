@@ -7,5 +7,8 @@ class MonoBehaviour :
 public:
     MonoBehaviour();
     virtual ~MonoBehaviour();
+
+private:
+    virtual void FinalUpdate() override final {}
 };
 

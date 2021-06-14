@@ -1,6 +1,11 @@
-cbuffer cbOffset : register(b0)
+cbuffer cbWorld : register(b0)
 {
-    float4 offset : packoffset(c0);
+    row_major matrix gWorld : packoffset(c0);
+}
+
+cbuffer cbViewProj : register(b1)
+{
+    row_major matrix gViewProj : packoffset(c0);
 }
 
 Texture2D texImage : register(t0);
@@ -22,9 +27,11 @@ PS_INPUT VS_Main(VS_INPUT input)
 {
     PS_INPUT output;
     
-    output.position = float4(input.position, 1.0f) + offset;
-    output.uv = input.uv;
+    output.position = mul(float4(input.position, 1.0f), gWorld);
+    output.position = mul(output.position, gViewProj);
     
+    output.uv = input.uv;
+   
     return output;
 }
 

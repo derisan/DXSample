@@ -19,9 +19,9 @@ MeshRenderer::~MeshRenderer()
 
 void MeshRenderer::Render()
 {
-	auto offset = GetTransform()->GetOffset();
-	
-	CMD_LIST->SetGraphicsRoot32BitConstants(0, 4, &offset, 0);
+	CMD_LIST->SetGraphicsRoot32BitConstants(ROOT_PARAMS_WORLD, 16, &GetTransform()->GetLocalToWorldMatrix(), 0);
+	CMD_LIST->SetGraphicsRoot32BitConstants(ROOT_PARAMS_VIEWPROJ, 16, &matrix::Identity, 0);
+	CMD_LIST->SetGraphicsRoot32BitConstants(ROOT_PARAMS_VIEWPROJ, 16, &matrix::Identity, 16);
 
 	mMaterial->Render();
 	mMesh->Render();
