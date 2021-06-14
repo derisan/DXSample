@@ -2,12 +2,17 @@
 #include "Camera.h"
 #include "Transform.h"
 #include "Engine.h"
+#include "SceneManager.h"
+#include "GameObject.h"
+#include "Scene.h"
+#include "MeshRenderer.h"
 
 matrix Camera::sViewMatrix;
 matrix Camera::sProjectionMatrix;
 
 Camera::Camera()
 	: Component(COMPONENT_TYPE::CAMERA)
+	, mUploadBuffer(DEVICE.Get(), 1, true)
 {
 
 }
@@ -19,22 +24,40 @@ Camera::~Camera()
 
 void Camera::FinalUpdate()
 {
-	matrix viewMatrix = {};
-	matrix projectionMatrix = {};
-
 	switch (mType)
 	{
 	case PROJECTION_TYPE::PERSPECTIVE:
-		viewMatrix = GetTransform()->GetLocalToWorldMatrix().Invert();
-		projectionMatrix = XMMatrixPerspectiveFovLH(XMConvertToRadians(mFOV), ASPECT_RATIO, mNear, mFar);
+		mViewProj.View = GetTransform()->GetLocalToWorldMatrix().Invert();
+		mViewProj.Proj = XMMatrixPerspectiveFovLH(XMConvertToRadians(mFOV), ASPECT_RATIO, mNear, mFar);
 		break;
 
 	case PROJECTION_TYPE::ORTHOGRAPHIC:
-		viewMatrix = matrix::Identity;
-		projectionMatrix = XMMatrixOrthographicLH(gEngine->GetWindowWidth() * mScale, gEngine->GetWindowHeight() * mScale, mNear, mFar);
+		mViewProj.View = matrix::Identity;
+		mViewProj.Proj = XMMatrixOrthographicLH(gEngine->GetWindowWidth() * mScale, gEngine->GetWindowHeight() * mScale, mNear, mFar);
 		break;
 	}
 
-	sViewMatrix = viewMatrix;
-	sProjectionMatrix = projectionMatrix;
+	mUploadBuffer.CopyData(0, mViewProj);
+}
+
+void Camera::Render()
+{
+	auto scene = GET_SINGLETON(SceneManager)->GetActiveScene();
+
+	const auto& objs = scene->GetGameObjects();
+
+
+	CMD_LIST->SetGraphicsRootConstantBufferView(ROOT_PARAMS_VIEWPROJ, mUploadBuffer.Resource()->GetGPUVirtualAddress());
+
+	for (auto& obj : objs)
+	{
+		auto meshRenderer = obj->GetMeshRenderer();
+
+		if (meshRenderer == nullptr)
+		{
+			continue;
+		}
+
+		meshRenderer->Render();
+	}
 }

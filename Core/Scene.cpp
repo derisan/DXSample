@@ -1,6 +1,7 @@
 #include "CorePch.h"
 #include "Scene.h"
 #include "GameObject.h"
+#include "Camera.h"
 
 void Scene::Awake()
 {
@@ -46,7 +47,14 @@ void Scene::Render()
 {
 	for (const auto& obj : mGameObjects)
 	{
-		obj->Render();
+		auto& camera = obj->GetCamera();
+
+		if (camera == nullptr)
+		{
+			continue;
+		}
+
+		camera->Render();
 	}
 }
 

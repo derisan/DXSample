@@ -6,6 +6,7 @@
 class Transform;
 class Camera;
 class MonoBehaviour;
+class MeshRenderer;
 
 class GameObject : public Object, public std::enable_shared_from_this<GameObject>
 {
@@ -18,9 +19,10 @@ public:
 	void Update();
 	void LateUpdate();
 	void FinalUpdate();
-	void Render();
-
+	
 	std::shared_ptr<Transform> GetTransform();
+	std::shared_ptr<Camera> GetCamera();
+	std::shared_ptr<MeshRenderer> GetMeshRenderer();
 
 	void AddComponent(std::shared_ptr<Component> component);
 

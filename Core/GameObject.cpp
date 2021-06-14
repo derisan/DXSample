@@ -86,25 +86,25 @@ void GameObject::FinalUpdate()
 	}
 }
 
-void GameObject::Render()
-{
-	uint8 index = static_cast<uint8>(COMPONENT_TYPE::MESH_RENDERER);
-
-	if (mComponents[index] != nullptr)
-	{
-		std::static_pointer_cast<MeshRenderer>(mComponents[index])->Render();
-	}
-}
-
 std::shared_ptr<Component> GameObject::getComponentByType(COMPONENT_TYPE type)
 {
-	uint8 index = static_cast<uint8>(COMPONENT_TYPE::TRANSFORM);
+	uint8 index = static_cast<uint8>(type);
 	return mComponents[index];
 }
 
 std::shared_ptr<Transform> GameObject::GetTransform()
 {
 	return std::static_pointer_cast<Transform>(getComponentByType(COMPONENT_TYPE::TRANSFORM));
+}
+
+std::shared_ptr<Camera> GameObject::GetCamera()
+{
+	return std::static_pointer_cast<Camera>(getComponentByType(COMPONENT_TYPE::CAMERA));
+}
+
+std::shared_ptr<MeshRenderer> GameObject::GetMeshRenderer()
+{
+	return std::static_pointer_cast<MeshRenderer>(getComponentByType(COMPONENT_TYPE::MESH_RENDERER));
 }
 
 void GameObject::AddComponent(std::shared_ptr<Component> component)

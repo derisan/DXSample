@@ -68,7 +68,7 @@ void CommandQueue::RenderBegin(const D3D12_VIEWPORT& viewport, const D3D12_RECT&
 
 	D3D12_CPU_DESCRIPTOR_HANDLE backBufferView = mSwapChain->GetCurrentBackBufferView();
 	D3D12_CPU_DESCRIPTOR_HANDLE depthStencilView = mSwapChain->GetDepthStencilView();
-	mCmdList->ClearRenderTargetView(backBufferView, Colors::LightCyan, 0, nullptr);
+	mCmdList->ClearRenderTargetView(backBufferView, Colors::Black, 0, nullptr);
 	mCmdList->ClearDepthStencilView(depthStencilView, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 	mCmdList->OMSetRenderTargets(1, &backBufferView, false, &depthStencilView);
 }
