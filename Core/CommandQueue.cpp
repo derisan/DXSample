@@ -32,6 +32,9 @@ void CommandQueue::FlushResCmdQueue()
 	mCmdQueue->ExecuteCommandLists(_countof(cmdLists), cmdLists);
 
 	WaitSync();
+
+	mCmdAlloc->Reset();
+	mCmdList->Reset(mCmdAlloc.Get(), nullptr);
 }
 
 void CommandQueue::WaitSync()

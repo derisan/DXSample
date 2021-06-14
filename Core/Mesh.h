@@ -1,11 +1,15 @@
 #pragma once
 
+#include "Object.h"
+
 class Texture;
 class Material;
 
-class Mesh
+class Mesh : public Object
 {
 public:
+	Mesh();
+
 	void Init(const std::vector<Vertex>& vertices, const std::vector<uint32>& indices);
 	void Render();
 

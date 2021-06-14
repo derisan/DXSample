@@ -3,6 +3,12 @@
 #include "Shader.h"
 #include "Texture.h"
 
+Material::Material()
+	: Object(OBJECT_TYPE::MATERIAL)
+{
+
+}
+
 void Material::Init(std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture)
 {
 	mShader = std::move(shader);

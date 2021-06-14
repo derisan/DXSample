@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Object.h"
+
 class Shader;
 class Texture;
 
@@ -8,9 +10,11 @@ struct MaterialParams
 	vec4 SomeValue;
 };
 
-class Material
+class Material : public Object
 {
 public:
+	Material();
+
 	void Init(std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture);
 	void Render();
 

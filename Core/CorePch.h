@@ -69,8 +69,15 @@ struct WindowInfo
 
 struct Vertex
 {
+	Vertex() {}
+
+	Vertex(vec3 pos, vec2 uv, vec3 norm, vec3 tangent)
+		: Position(pos), UV(uv), Normal(norm), Tangent(tangent) {}
+
 	vec3 Position;
 	vec2 UV;
+	vec3 Normal;
+	vec3 Tangent;
 };
 
 extern std::unique_ptr<class Engine> gEngine;

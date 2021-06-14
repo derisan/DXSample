@@ -3,6 +3,12 @@
 #include "Engine.h"
 
 
+Mesh::Mesh()
+	: Object(OBJECT_TYPE::MESH)
+{
+
+}
+
 void Mesh::Init(const std::vector<Vertex>& vertices, const std::vector<uint32>& indices)
 {
 	mVertexCount = vertices.size();

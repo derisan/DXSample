@@ -10,6 +10,7 @@
 #include "Camera.h"
 #include "Transform.h"
 #include "TestCameraScript.h"
+#include "ResourceManager.h"
 
 void SceneManager::Update()
 {
@@ -43,41 +44,27 @@ void SceneManager::LoadScene(const std::wstring& sceneName)
 
 std::shared_ptr<Scene> SceneManager::LoadTestScene()
 {
-#pragma region Veigar
-	std::vector<Vertex> vertices(4);
-	vertices[0].Position = vec3(-0.5f, -0.5f, 0.5f);
-	vertices[0].UV = vec2(0.0f, 1.0f);
-	vertices[1].Position = vec3(-0.5f, 0.5f, 0.5f);
-	vertices[1].UV = vec2(0.0f, 0.0f);
-	vertices[2].Position = vec3(0.5f, 0.5f, 0.5f);
-	vertices[2].UV = vec2(1.0f, 0.0f);
-	vertices[3].Position = vec3(0.5f, -0.5f, 0.5f);
-	vertices[3].UV = vec2(1.0f, 1.0f);
+	std::shared_ptr<Scene> scene = std::make_shared<Scene>();
 
-	std::vector<uint32> indices;
+#pragma region Camera
 	{
-		indices.push_back(0);
-		indices.push_back(1);
-		indices.push_back(2);
+		std::shared_ptr<GameObject> camera = std::make_shared<GameObject>();
+		camera->AddComponent(std::make_shared<Transform>());
+		camera->AddComponent(std::make_shared<Camera>());
+		camera->AddComponent(std::make_shared<TestCameraScript>());
+		camera->GetTransform()->SetLocalPosition(vec3(0.0f, 0.0f, -5.0f));
+		scene->AddGameObject(camera);
 	}
+#pragma endregion
+
+#pragma region Sphere
 	{
-		indices.push_back(0);
-		indices.push_back(2);
-		indices.push_back(3);
-	}
-
-
-	std::shared_ptr<GameObject> obj = std::make_shared<GameObject>();
-	obj->Init();
-
-	std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>();
-	{
-		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
-		mesh->Init(vertices, indices);
-		meshRenderer->SetMesh(mesh);
-	}
-
-	{
+		std::shared_ptr<GameObject> sphere = std::make_shared<GameObject>();
+		sphere->AddComponent(std::make_shared<Transform>());
+		
+		std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>();
+		std::shared_ptr<Mesh> sphereMesh = GET_SINGLETON(ResourceManager)->LoadSphereMesh();
+		meshRenderer->SetMesh(sphereMesh);
 		std::shared_ptr<Shader> shader = std::make_shared<Shader>();
 		std::shared_ptr<Texture> texture = std::make_shared<Texture>();
 		shader->Init(L"..\\Resources\\Shaders\\default.hlsli");
@@ -85,24 +72,33 @@ std::shared_ptr<Scene> SceneManager::LoadTestScene()
 		std::shared_ptr<Material> material = std::make_shared<Material>();
 		material->Init(shader, texture);
 		meshRenderer->SetMaterial(material);
+
+		sphere->AddComponent(meshRenderer);
+		scene->AddGameObject(sphere);
 	}
-
-	obj->AddComponent(meshRenderer);
-
-	std::shared_ptr<Scene> scene = std::make_shared<Scene>();
-	scene->AddGameObject(obj);
-#pragma endregion 
-
-
-#pragma region Camera
-	std::shared_ptr<GameObject> camera = std::make_shared<GameObject>();
-	camera->Init();
-	camera->AddComponent(std::make_shared<Camera>());
-	camera->AddComponent(std::make_shared<TestCameraScript>());
-	camera->GetTransform()->SetLocalPosition(vec3(0.0f, 0.0f, -5.0f));
-	scene->AddGameObject(camera);
 #pragma endregion
 
+#pragma region Cube
+	{
+		std::shared_ptr<GameObject> cube = std::make_shared<GameObject>();
+		cube->AddComponent(std::make_shared<Transform>());
+		cube->GetTransform()->SetLocalPosition(vec3(2.0f, 0.0f, 0.0f));
+		
+		std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>();
+		std::shared_ptr<Mesh> cubeMesh = GET_SINGLETON(ResourceManager)->LoadCubeMesh();
+		meshRenderer->SetMesh(cubeMesh);
+		std::shared_ptr<Shader> shader = std::make_shared<Shader>();
+		std::shared_ptr<Texture> texture = std::make_shared<Texture>();
+		shader->Init(L"..\\Resources\\Shaders\\default.hlsli");
+		texture->Init(L"..\\Resources\\Textures\\veigar.jpg");
+		std::shared_ptr<Material> material = std::make_shared<Material>();
+		material->Init(shader, texture);
+		meshRenderer->SetMaterial(material);
 
-	return scene;
+		cube->AddComponent(meshRenderer);
+		scene->AddGameObject(cube);
+	}
+#pragma endregion
+
+		return scene;
 }

@@ -1,18 +1,18 @@
 #pragma once
 
 #include "Component.h"
+#include "Object.h"
 
 class Transform;
 class Camera;
 class MonoBehaviour;
 
-class GameObject : public std::enable_shared_from_this<GameObject>
+class GameObject : public Object, public std::enable_shared_from_this<GameObject>
 {
 public:
-	GameObject() = default;
+	GameObject();
 	virtual ~GameObject() = default;
 
-	void Init();
 	void Awake();
 	void Start();
 	void Update();

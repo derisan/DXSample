@@ -25,7 +25,7 @@ private:
 
 	float mNear = 0.3f;
 	float mFar = 1000.0f;
-	float mFOV = 90.0f;
+	float mFOV = 45.0f;
 	float mScale = 1.0f;
 
 public:

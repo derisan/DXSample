@@ -5,9 +5,10 @@
 #include "MeshRenderer.h"
 #include "Camera.h"
 
-void GameObject::Init()
+GameObject::GameObject()
+	: Object(OBJECT_TYPE::GAMEOBJECT)
 {
-	AddComponent(std::make_shared<Transform>());
+
 }
 
 void GameObject::Awake()

@@ -1,8 +1,12 @@
 #pragma once
 
-class Shader
+#include "Object.h"
+
+class Shader : public Object
 {
 public:
+	Shader();
+
 	void Init(const std::wstring& path);
 	void Render();
 

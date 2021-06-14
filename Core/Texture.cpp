@@ -2,6 +2,12 @@
 #include "Texture.h"
 #include "Engine.h"
 
+Texture::Texture()
+	: Object(OBJECT_TYPE::TEXTURE)
+{
+
+}
+
 void Texture::Init(const std::wstring& path)
 {
 	createTexture(path);

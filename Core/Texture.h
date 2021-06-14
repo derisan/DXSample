@@ -1,8 +1,12 @@
 #pragma once
 
-class Texture
+#include "Object.h"
+
+class Texture : public Object
 {
 public:
+	Texture();
+
 	void Init(const std::wstring& path);
 	void Render();
 
@@ -17,6 +21,6 @@ private:
 	ScratchImage mRawImage = {};
 	ComPtr<ID3D12Resource> mTexture = nullptr;
 	ComPtr<ID3D12DescriptorHeap> mSrvHeap = nullptr;
-	D3D12_GPU_DESCRIPTOR_HANDLE mSrvGpuHandle;
+	D3D12_GPU_DESCRIPTOR_HANDLE mSrvGpuHandle = {};
 };
 
