@@ -1,16 +1,8 @@
-cbuffer cbWorld : register(b0)
-{
-    row_major matrix gWorld : packoffset(c0);
-}
+#ifndef _DEFAULT_HLSLI_
+#define _DEFAULT_HLSLI_
 
-cbuffer cbViewProj : register(b1)
-{
-    row_major matrix gView;
-    row_major matrix gProj;
-}
-
-Texture2D texImage : register(t0);
-SamplerState samplerType : register(s0);
+#include "params.hlsli"
+#include "utils.hlsli"
 
 struct VS_INPUT
 {
@@ -23,7 +15,9 @@ struct VS_INPUT
 struct PS_INPUT
 {
     float4 position : SV_Position;
-    float2 uv : TEXCOORD;  
+    float2 uv : TEXCOORD;
+    float3 viewPos : POSITION;
+    float3 viewNormal : NORMAL;
 };
 
 PS_INPUT VS_Main(VS_INPUT input)
@@ -32,10 +26,16 @@ PS_INPUT VS_Main(VS_INPUT input)
     
     output.position = mul(float4(input.position, 1.0f), gWorld);
     output.position = mul(output.position, gView);
+    
+    output.viewPos = output.position;
+    
     output.position = mul(output.position, gProj);
+
+    output.viewNormal = mul(input.normal, (float3x3) gWorld);
+    output.viewNormal = normalize(mul(output.viewNormal, (float3x3) gView));
     
     output.uv = input.uv;
-   
+
     return output;
 }
 
@@ -45,3 +45,5 @@ float4 PS_Main(PS_INPUT input) : SV_Target
     
     return color;
 }
+
+#endif

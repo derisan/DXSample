@@ -1,10 +1,15 @@
 #pragma once
 
+#include "Light.h"
+
 class GameObject;
 
 class Scene
 {
 public:
+	Scene();
+	virtual ~Scene() = default;
+
 	void Awake();
 	void Start();
 	void Update();
@@ -19,6 +24,11 @@ public:
 	const std::vector<std::shared_ptr<GameObject>>& GetGameObjects() const { return mGameObjects; }
 
 private:
+	void setLightData();
+
+private:
 	std::vector<std::shared_ptr<GameObject>> mGameObjects;
+
+	UploadBuffer<LightParams> mLightCb;
 };
 

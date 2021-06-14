@@ -11,7 +11,7 @@ enum class COMPONENT_TYPE : uint8
 	TRANSFORM,
 	MESH_RENDERER,
 	CAMERA,
-
+	LIGHT,
 	// MONO_BEHAIVOUR should be last...
 	MONO_BEHAVIOUR,
 	END

@@ -169,6 +169,7 @@
     <ClInclude Include="Engine.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshRenderer.h" />
@@ -201,6 +202,7 @@
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshRenderer.cpp" />
@@ -220,6 +222,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resources\Shaders\default.hlsli" />
+    <None Include="..\Resources\Shaders\params.hlsli" />
+    <None Include="..\Resources\Shaders\utils.hlsli" />
     <None Include="..\vendor\inc\DirectXTex\DirectXTex.inl" />
     <None Include="SimpleMath.inl" />
   </ItemGroup>

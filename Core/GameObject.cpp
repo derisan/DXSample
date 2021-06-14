@@ -4,6 +4,7 @@
 #include "MonoBehaviour.h"
 #include "MeshRenderer.h"
 #include "Camera.h"
+#include "Light.h"
 
 GameObject::GameObject()
 	: Object(OBJECT_TYPE::GAMEOBJECT)
@@ -105,6 +106,11 @@ std::shared_ptr<Camera> GameObject::GetCamera()
 std::shared_ptr<MeshRenderer> GameObject::GetMeshRenderer()
 {
 	return std::static_pointer_cast<MeshRenderer>(getComponentByType(COMPONENT_TYPE::MESH_RENDERER));
+}
+
+std::shared_ptr<Light> GameObject::GetLight()
+{
+	return std::static_pointer_cast<Light>(getComponentByType(COMPONENT_TYPE::LIGHT));
 }
 
 void GameObject::AddComponent(std::shared_ptr<Component> component)

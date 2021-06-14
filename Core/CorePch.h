@@ -108,3 +108,4 @@ public:								\
 #define ROOT_PARAMS_WORLD		0
 #define ROOT_PARAMS_VIEWPROJ	1
 #define ROOT_PARAMS_TEXTURE		2
+#define ROOT_PARAMS_LIGHT		3
