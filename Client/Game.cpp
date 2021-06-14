@@ -2,10 +2,10 @@
 #include "Game.h"
 #include "Engine.h"
 
-std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
-std::shared_ptr<Shader> shader = std::make_shared<Shader>();
-std::shared_ptr<Texture> texture = std::make_shared<Texture>();
-std::shared_ptr<Material> material = std::make_shared<Material>();
+#include "GameObject.h"
+#include "MeshRenderer.h"
+
+std::shared_ptr<GameObject> obj = std::make_shared<GameObject>();
 
 void Game::Init(const WindowInfo& info)
 {
@@ -33,12 +33,26 @@ void Game::Init(const WindowInfo& info)
 		indices.push_back(3);
 	}
 
-	mesh->Init(vertices, indices);
-	mesh->SetOffset(vec4(0.25f, -0.5f, 0.0f, 0.0f));
-	shader->Init(L"..//Resources//Shaders//default.hlsli");
-	texture->Init(L"..//Resources//Textures//veigar.jpg");
-	material->Init(shader, texture);
-	mesh->SetMaterial(material);
+	obj->Init();
+
+	std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>();
+	{
+		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
+		mesh->Init(vertices, indices);
+		meshRenderer->SetMesh(mesh);
+	}
+
+	{
+		std::shared_ptr<Shader> shader = std::make_shared<Shader>();
+		std::shared_ptr<Texture> texture = std::make_shared<Texture>();
+		shader->Init(L"..\\Resources\\Shaders\\default.hlsli");
+		texture->Init(L"..\\Resources\\Textures\\veigar.jpg");
+		std::shared_ptr<Material> material = std::make_shared<Material>();
+		material->Init(shader, texture);
+		meshRenderer->SetMaterial(material);
+	}
+
+	obj->AddComponent(meshRenderer);
 }
 
 void Game::Run()
@@ -47,20 +61,7 @@ void Game::Run()
 
 	gEngine->RenderBegin();
 
-	static vec4 offset = {};
-
-
-	if (INPUT->IsButtonHold(KEY_TYPE::W))
-		offset.y += 1.f * DELTA_TIME;
-	if (INPUT->IsButtonHold(KEY_TYPE::S))
-		offset.y -= 1.f * DELTA_TIME;
-	if (INPUT->IsButtonHold(KEY_TYPE::A))
-		offset.x -= 1.f * DELTA_TIME;
-	if (INPUT->IsButtonHold(KEY_TYPE::D))
-		offset.x += 1.f * DELTA_TIME;
-
-	mesh->SetOffset(offset);
-	mesh->Render();
+	obj->Update();
 
 	gEngine->RenderEnd();
 }
