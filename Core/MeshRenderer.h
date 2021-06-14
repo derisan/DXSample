@@ -11,13 +11,10 @@ public:
     MeshRenderer();
     ~MeshRenderer();
 
+    void Render();
+
     void SetMesh(std::shared_ptr<Mesh> mesh) { mMesh = std::move(mesh); }
     void SetMaterial(std::shared_ptr<Material> material) { mMaterial = std::move(material); }
-
-    virtual void Update() override { render(); }
-
-private:
-    void render();
 
 private:
     std::shared_ptr<Mesh> mMesh = nullptr;

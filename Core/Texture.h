@@ -6,8 +6,8 @@ public:
 	void Init(const std::wstring& path);
 	void Render();
 
-	inline D3D12_GPU_DESCRIPTOR_HANDLE GetSrvGpuHandle() { return mSrvGpuHandle; }
-	inline ComPtr<ID3D12DescriptorHeap> GetSrvHeap() const { return mSrvHeap; }
+// 	inline D3D12_GPU_DESCRIPTOR_HANDLE GetSrvGpuHandle() { return mSrvGpuHandle; }
+// 	inline ComPtr<ID3D12DescriptorHeap> GetSrvHeap() const { return mSrvHeap; }
 
 private:
 	void createTexture(const std::wstring& path);

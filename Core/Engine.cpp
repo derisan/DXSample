@@ -1,6 +1,10 @@
 #include "CorePch.h"
 #include "Engine.h"
 
+#include "Timer.h"
+#include "Input.h"
+#include "SceneManager.h"
+
 void Engine::Init(const WindowInfo& info)
 {
 	mWindow = info;
@@ -13,15 +17,13 @@ void Engine::Init(const WindowInfo& info)
 	mCmdQueue = std::make_shared<CommandQueue>();
 	mSwapChain = std::make_shared<SwapChain>();
 	mRootSignature = std::make_shared<RootSignature>();
-	mInput = std::make_shared<Input>();
-	mTimer = std::make_shared<Timer>();
 	
 	mDevice->Init();
 	mCmdQueue->Init(mDevice->GetDevice(), mSwapChain);
 	mSwapChain->Init(info, mDevice->GetDevice(), mDevice->GetFactory(), mCmdQueue->GetCmdQueue());
 	mRootSignature->Init(mDevice->GetDevice());
-	mTimer->Init();
-	mInput->Init(info.hWnd);
+	GET_SINGLETON(Timer)->Init();
+	GET_SINGLETON(Input)->Init(info.hWnd);
 }
 
 void Engine::ResizeWindow(int32 width, int32 height)
@@ -36,27 +38,38 @@ void Engine::ResizeWindow(int32 width, int32 height)
 
 void Engine::showFPS()
 {
-	uint32 fps = mTimer->GetFPS();
+	uint32 fps = TIMER->GetFPS();
 
 	WCHAR text[100] = L"";
 	::wsprintf(text, L"FPS : %d", fps);
 	::SetWindowText(mWindow.hWnd, text);
 }
 
-void Engine::RenderBegin()
+void Engine::renderBegin()
 {
 	mCmdQueue->RenderBegin(mViewport, mScissorRect);
 }
 
-void Engine::RenderEnd()
+void Engine::renderEnd()
 {
 	mCmdQueue->RenderEnd();
 }
 
 void Engine::Update()
 {
-	mInput->Update();
-	mTimer->Update();
+	GET_SINGLETON(Input)->Update();
+	GET_SINGLETON(Timer)->Update();
+
+	GET_SINGLETON(SceneManager)->Update();
 
 	showFPS();
+}
+
+void Engine::Render()
+{
+	renderBegin();
+
+	GET_SINGLETON(SceneManager)->Render();
+
+	renderEnd();
 }

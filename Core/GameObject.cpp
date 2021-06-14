@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Transform.h"
 #include "MonoBehaviour.h"
+#include "MeshRenderer.h"
 
 void GameObject::Init()
 {
@@ -69,6 +70,16 @@ void GameObject::LateUpdate()
 	for (auto& script : mScripts)
 	{
 		script->LateUpdate();
+	}
+}
+
+void GameObject::Render()
+{
+	uint8 index = static_cast<uint8>(COMPONENT_TYPE::MESH_RENDERER);
+
+	if (mComponents[index] != nullptr)
+	{
+		std::static_pointer_cast<MeshRenderer>(mComponents[index])->Render();
 	}
 }
 

@@ -18,6 +18,8 @@ public:
 	void Update();
 	void LateUpdate();
 
+	void Render();
+
 	std::shared_ptr<Transform> GetTransform();
 
 	void AddComponent(std::shared_ptr<Component> component);

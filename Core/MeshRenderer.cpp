@@ -17,7 +17,7 @@ MeshRenderer::~MeshRenderer()
 	
 }
 
-void MeshRenderer::render()
+void MeshRenderer::Render()
 {
 	auto offset = GetTransform()->GetOffset();
 	

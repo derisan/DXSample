@@ -73,8 +73,26 @@ struct Vertex
 
 extern std::unique_ptr<class Engine> gEngine;
 
+#define DECLARE_SINGLETON(type)		\
+private:							\
+	type() {};							\
+public:								\
+	type(const type&) = delete;		\
+	static type* GetInstance()		\
+	{								\
+		static type instance;		\
+		return &instance;			\
+	}								\
+
+#define GET_SINGLETON(type) type::GetInstance()
+
 #define DEVICE gEngine->GetDevice()->GetDevice()
 #define CMD_LIST gEngine->GetCmdQueue()->GetCmdList()
 #define ROOT_SIGNATURE gEngine->GetRootSignature()->GetRootSignature()
-#define INPUT gEngine->GetInput()
+#define INPUT GET_SINGLETON(Input)
+#define TIMER GET_SINGLETON(Timer)
 #define DELTA_TIME gEngine->GetTimer()->GetDeltaTime()
+
+
+
+
