@@ -105,18 +105,12 @@ public:								\
 
 #define ASPECT_RATIO gEngine->GetAspectRatio()
 
-#define ROOT_PARAMS_WORLD		0
-#define ROOT_PARAMS_VIEWPROJ	1
-#define ROOT_PARAMS_LIGHT		2
-#define ROOT_PARAMS_DIFFUSE		3
-#define ROOT_PARAMS_NORMAL		4
-
-enum class RootParamIndex
+enum RootParamIndex
 {
 	ROOT_PARAM_WORLD,
 	ROOT_PARAM_VIEWPROJ,
 	ROOT_PARAM_LIGHT,
-
+	ROOT_PARAM_MATERIAL,
 	ROOT_PARAM_DIFFUSE,
 	ROOT_PARAM_NORMAL,
 	END

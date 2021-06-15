@@ -18,22 +18,24 @@ struct PS_INPUT
     float2 uv : TEXCOORD;
     float3 viewPos : POSITION;
     float3 viewNormal : NORMAL;
+    float3 viewTanget : TANGENT;
+    float3 viewBinormal : BINORMAL;
 };
 
 PS_INPUT VS_Main(VS_INPUT input)
 {
-    PS_INPUT output;
+    PS_INPUT output = (PS_INPUT)0;
     
-    output.position = mul(float4(input.position, 1.0f), gWorld);
-    output.position = mul(output.position, gView);
+    matrix worldView = mul(gWorld, gView);
     
+    output.position = mul(float4(input.position, 1.0f), worldView);
     output.viewPos = output.position;
-    
     output.position = mul(output.position, gProj);
-
-    output.viewNormal = mul(input.normal, (float3x3) gWorld);
-    output.viewNormal = normalize(mul(output.viewNormal, (float3x3) gView));
     
+    output.viewNormal = normalize(mul(float4(input.normal, 0.0f), worldView).xyz);
+    output.viewTanget = normalize(mul(float4(input.tangent, 0.0f), worldView).xyz);
+    output.viewBinormal = normalize(cross(output.viewTanget, output.viewNormal));
+  
     output.uv = input.uv;
 
     return output;
@@ -41,13 +43,22 @@ PS_INPUT VS_Main(VS_INPUT input)
 
 float4 PS_Main(PS_INPUT input) : SV_Target
 {
-    float4 color = texImage.Sample(samplerType, input.uv);
+    float4 color = diffuseMap.Sample(samplerType, input.uv);
     
-    LightColor totalColor = (LightColor)0;
+    float3 viewNormal = input.viewNormal;
+    if (bUseNormalMap)
+    {
+        float3 tangentSpaceNormal = normalMap.Sample(samplerType, input.uv).xyz;
+        tangentSpaceNormal = (tangentSpaceNormal - 0.5f) * 2.0f;
+        float3x3 TBN = { input.viewTanget, input.viewBinormal, input.viewNormal };
+        viewNormal = normalize(mul(tangentSpaceNormal, TBN));
+    }
+    
+    LightColor totalColor = (LightColor) 0;
     
     for (int i = 0; i < gLightCount; i++)
     {
-        LightColor color = CalculateLightColor(i, input.viewNormal, input.viewPos);
+        LightColor color = CalculateLightColor(i, viewNormal, input.viewPos);
         totalColor.diffuse += color.diffuse;
         totalColor.ambient += color.ambient;
         totalColor.specular += color.specular;

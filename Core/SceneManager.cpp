@@ -66,11 +66,13 @@ std::shared_ptr<Scene> SceneManager::LoadTestScene()
 		std::shared_ptr<Mesh> sphereMesh = GET_SINGLETON(ResourceManager)->LoadSphereMesh();
 		meshRenderer->SetMesh(sphereMesh);
 		std::shared_ptr<Shader> shader = std::make_shared<Shader>();
-		std::shared_ptr<Texture> texture = GET_SINGLETON(ResourceManager)->Load<Texture>(L"veigar", L"..\\Resources\\Textures\\veigar.jpg");
+		std::shared_ptr<Texture> texture = GET_SINGLETON(ResourceManager)->Load<Texture>(L"Waffle", L"..\\Resources\\Textures\\Waffle.jpg");
+		std::shared_ptr<Texture> tex2 = GET_SINGLETON(ResourceManager)->Load<Texture>(L"Waffle_Normal", L"..\\Resources\\Textures\\Waffle_Normal.jpg");
 		shader->Init(L"..\\Resources\\Shaders\\default.hlsli");
 		std::shared_ptr<Material> material = std::make_shared<Material>();
 		material->SetShader(shader);
 		material->SetTexture(texture, TEXTURE_TYPE::DIFFUSE_MAP);
+		material->SetTexture(tex2, TEXTURE_TYPE::NORMAL_MAP	);
 		meshRenderer->SetMaterial(material);
 
 		sphere->AddComponent(meshRenderer);
@@ -89,10 +91,12 @@ std::shared_ptr<Scene> SceneManager::LoadTestScene()
 		meshRenderer->SetMesh(cubeMesh);
 		std::shared_ptr<Shader> shader = std::make_shared<Shader>();
 		std::shared_ptr<Texture> texture = GET_SINGLETON(ResourceManager)->Load<Texture>(L"Waffle", L"..\\Resources\\Textures\\Waffle.jpg");
+		std::shared_ptr<Texture> tex2 = GET_SINGLETON(ResourceManager)->Load<Texture>(L"Waffle_Normal", L"..\\Resources\\Textures\\Waffle_Normal.jpg");
 		shader->Init(L"..\\Resources\\Shaders\\default.hlsli");
 		std::shared_ptr<Material> material = std::make_shared<Material>();
 		material->SetShader(shader);
 		material->SetTexture(texture, TEXTURE_TYPE::DIFFUSE_MAP);
+		material->SetTexture(tex2, TEXTURE_TYPE::NORMAL_MAP);
 		meshRenderer->SetMaterial(material);
 
 		cube->AddComponent(meshRenderer);
@@ -105,11 +109,11 @@ std::shared_ptr<Scene> SceneManager::LoadTestScene()
 		std::shared_ptr<GameObject> light = std::make_shared<GameObject>();
 		light->AddComponent(std::make_shared<Transform>());
 		light->AddComponent(std::make_shared<Light>());
-		light->GetLight()->SetLightDirection(vec3(0.f, 0.f, 1.f));
+		light->GetLight()->SetLightDirection(vec3(1.f, 0.f, 1.f));
 		light->GetLight()->SetLightType(LIGHT_TYPE::DIRECTIONAL_LIGHT);
-		light->GetLight()->SetDiffuse(vec3(1.f, 1.0f, 1.0f));
-		light->GetLight()->SetAmbient(vec3(0.1f, 0.f, 0.f));
-		light->GetLight()->SetSpecular(vec3(0.1f, 0.1f, 0.1f));
+		light->GetLight()->SetDiffuse(vec3(1.0f, 1.0f, 1.0f));
+		light->GetLight()->SetAmbient(vec3(0.1f, 0.1f, 0.1f));
+		light->GetLight()->SetSpecular(vec3(0.3f, 0.3f, 0.3f));
 		scene->AddGameObject(light);
 	}
 #pragma endregion

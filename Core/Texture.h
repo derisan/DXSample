@@ -8,7 +8,7 @@ public:
 	Texture();
 
 	void Init(const std::wstring& path);
-	void Render(int paramIdx);
+	void Render(int paramOffset);
 
 	virtual void Load(const std::wstring& path) override;
 

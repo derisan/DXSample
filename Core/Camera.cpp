@@ -47,7 +47,7 @@ void Camera::Render()
 	const auto& objs = scene->GetGameObjects();
 
 
-	CMD_LIST->SetGraphicsRootConstantBufferView(ROOT_PARAMS_VIEWPROJ, mUploadBuffer.Resource()->GetGPUVirtualAddress());
+	CMD_LIST->SetGraphicsRootConstantBufferView(RootParamIndex::ROOT_PARAM_VIEWPROJ, mUploadBuffer.Resource()->GetGPUVirtualAddress());
 
 	for (auto& obj : objs)
 	{

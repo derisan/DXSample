@@ -100,5 +100,5 @@ void Scene::setLightData()
 
 	mLightCb.CopyData(0, lightParams);
 
-	CMD_LIST->SetGraphicsRootConstantBufferView(ROOT_PARAMS_LIGHT, mLightCb.Resource()->GetGPUVirtualAddress());
+	CMD_LIST->SetGraphicsRootConstantBufferView(RootParamIndex::ROOT_PARAM_LIGHT, mLightCb.Resource()->GetGPUVirtualAddress());
 }

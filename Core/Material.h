@@ -7,7 +7,7 @@ class Texture;
 
 struct MaterialParams
 {
-	vec4 SomeValue;
+	int32 bUseNormalMap;
 };
 
 enum class TEXTURE_TYPE : uint8
@@ -30,6 +30,7 @@ public:
 
 	void SetShader(std::shared_ptr<Shader> shader) { mShader = std::move(shader); }
 	void SetTexture(std::shared_ptr<Texture> texture, TEXTURE_TYPE type);
+	void SetUseNormalMap(int32 value) { mMaterialParams.bUseNormalMap = value; }
 
 	void Render();
 
@@ -37,6 +38,9 @@ private:
 	std::shared_ptr<Shader> mShader = nullptr;
 	std::array<std::shared_ptr<Texture>, TEXTURE_COUNT> mTextures;
 
+	MaterialParams mMaterialParams = {};
 	uint32 mTextureCount = 0;
+
+	UploadBuffer<MaterialParams> mUploadBuffer;
 };
 

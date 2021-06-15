@@ -3,18 +3,22 @@
 
 void RootSignature::Init(ComPtr<ID3D12Device> device)
 {
-	D3D12_DESCRIPTOR_RANGE ranges[1];
-	ranges[0].BaseShaderRegister = 0;
-	ranges[0].NumDescriptors = 1;
-	ranges[0].OffsetInDescriptorsFromTableStart = 0;
-	ranges[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
-	ranges[0].RegisterSpace = 0;
+	D3D12_DESCRIPTOR_RANGE diffuseRange[1];
+	diffuseRange[0].BaseShaderRegister = 0;
+	diffuseRange[0].NumDescriptors = 1;
+	diffuseRange[0].OffsetInDescriptorsFromTableStart = 0;
+	diffuseRange[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+	diffuseRange[0].RegisterSpace = 0;
+
+	CD3DX12_DESCRIPTOR_RANGE normalRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 1);
 	
-	CD3DX12_ROOT_PARAMETER params[4];
-	params[ROOT_PARAMS_WORLD].InitAsConstantBufferView(0);
-	params[ROOT_PARAMS_VIEWPROJ].InitAsConstantBufferView(1);
-	params[ROOT_PARAMS_LIGHT].InitAsConstantBufferView(2);
-	params[ROOT_PARAMS_DIFFUSE].InitAsDescriptorTable(_countof(ranges), ranges, D3D12_SHADER_VISIBILITY_PIXEL);
+	CD3DX12_ROOT_PARAMETER params[RootParamIndex::END];
+	params[RootParamIndex::ROOT_PARAM_WORLD].InitAsConstantBufferView(0);
+	params[RootParamIndex::ROOT_PARAM_VIEWPROJ].InitAsConstantBufferView(1);
+	params[RootParamIndex::ROOT_PARAM_LIGHT].InitAsConstantBufferView(2);
+	params[RootParamIndex::ROOT_PARAM_MATERIAL].InitAsConstantBufferView(3);
+	params[RootParamIndex::ROOT_PARAM_DIFFUSE].InitAsDescriptorTable(_countof(diffuseRange), diffuseRange, D3D12_SHADER_VISIBILITY_PIXEL);
+	params[RootParamIndex::ROOT_PARAM_NORMAL].InitAsDescriptorTable(1, &normalRange, D3D12_SHADER_VISIBILITY_PIXEL);
 
 	D3D12_ROOT_SIGNATURE_DESC sigDesc = CD3DX12_ROOT_SIGNATURE_DESC(_countof(params), params, 1,
 		&CD3DX12_STATIC_SAMPLER_DESC(0), D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);

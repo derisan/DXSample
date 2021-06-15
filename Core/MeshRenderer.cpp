@@ -20,7 +20,7 @@ MeshRenderer::~MeshRenderer()
 
 void MeshRenderer::Render()
 {
-	CMD_LIST->SetGraphicsRootConstantBufferView(ROOT_PARAMS_WORLD, GetTransform()->GetWorldCbGpuAddr());
+	CMD_LIST->SetGraphicsRootConstantBufferView(RootParamIndex::ROOT_PARAM_WORLD, GetTransform()->GetWorldCbGpuAddr());
 
 	mMaterial->Render();
 	mMesh->Render();

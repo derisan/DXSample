@@ -37,7 +37,14 @@ cbuffer cbLight : register(b2)
     LightInfo gLights[50];
 }
 
-Texture2D texImage : register(t0);
+cbuffer cbMaterial : register(b3)
+{
+    int bUseNormalMap;
+}
+
+Texture2D diffuseMap : register(t0);
+Texture2D normalMap : register(t1);
+
 SamplerState samplerType : register(s0);
 
 #endif
