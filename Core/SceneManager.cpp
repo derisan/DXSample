@@ -118,5 +118,29 @@ std::shared_ptr<Scene> SceneManager::LoadTestScene()
 	}
 #pragma endregion
 
+
+#pragma region Skybox
+	std::shared_ptr<GameObject> skybox = std::make_shared<GameObject>();
+	skybox->AddComponent(std::make_shared<Transform>());
+	std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>();
+	{
+		std::shared_ptr<Mesh> sphereMesh = GET_SINGLETON(ResourceManager)->LoadSphereMesh();
+		meshRenderer->SetMesh(sphereMesh);
+	}
+	{
+		std::shared_ptr<Shader> shader = std::make_shared<Shader>();
+		shader->Init(L"..\\Resources\\Shaders\\skybox.hlsli",
+				{ RASTERIZER_TYPE::CULL_NONE, DEPTH_STENCIL_TYPE::LESS_EQUAL });
+		std::shared_ptr<Texture> tex = GET_SINGLETON(ResourceManager)->Load<Texture>(L"Skybox", L"..\\Resources\\Textures\\Sky01.jpg");
+		std::shared_ptr<Material> material = std::make_shared<Material>();
+		material->SetShader(shader);
+		material->SetTexture(tex, TEXTURE_TYPE::DIFFUSE_MAP);
+		meshRenderer->SetMaterial(material);
+	}
+	skybox->AddComponent(meshRenderer);
+	scene->AddGameObject(skybox);
+
+#pragma endregion
+
 		return scene;
 }

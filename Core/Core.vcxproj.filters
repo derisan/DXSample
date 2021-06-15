@@ -205,5 +205,8 @@
     <None Include="..\Resources\Shaders\utils.hlsli">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="..\Resources\Shaders\skybox.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

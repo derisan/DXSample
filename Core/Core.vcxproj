@@ -223,6 +223,7 @@
   <ItemGroup>
     <None Include="..\Resources\Shaders\default.hlsli" />
     <None Include="..\Resources\Shaders\params.hlsli" />
+    <None Include="..\Resources\Shaders\skybox.hlsli" />
     <None Include="..\Resources\Shaders\utils.hlsli" />
     <None Include="..\vendor\inc\DirectXTex\DirectXTex.inl" />
     <None Include="SimpleMath.inl" />

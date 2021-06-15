@@ -8,7 +8,7 @@ Shader::Shader()
 
 }
 
-void Shader::Init(const std::wstring& path)
+void Shader::Init(const std::wstring& path, const ShaderInfo& info)
 {
 	uint32 compileFlag = 0;
 #ifdef _DEBUG
@@ -52,6 +52,47 @@ void Shader::Init(const std::wstring& path)
 	psoDesc.PS = { psBlob->GetBufferPointer(), psBlob->GetBufferSize() };
 	psoDesc.InputLayout = { desc, _countof(desc) };
 	psoDesc.pRootSignature = ROOT_SIGNATURE.Get();
+
+
+	switch (info.rsType)
+	{
+	case RASTERIZER_TYPE::CULL_BACK:
+		psoDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
+		psoDesc.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;
+		break;
+	case RASTERIZER_TYPE::CULL_FRONT:
+		psoDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
+		psoDesc.RasterizerState.CullMode = D3D12_CULL_MODE_FRONT;
+		break;
+	case RASTERIZER_TYPE::CULL_NONE:
+		psoDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
+		psoDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+		break;
+	case RASTERIZER_TYPE::WIREFRAME:
+		psoDesc.RasterizerState.FillMode = D3D12_FILL_MODE_WIREFRAME;
+		psoDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+		break;
+	}
+
+	switch (info.dsType)
+	{
+	case DEPTH_STENCIL_TYPE::LESS:
+		psoDesc.DepthStencilState.DepthEnable = TRUE;
+		psoDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
+		break;
+	case DEPTH_STENCIL_TYPE::LESS_EQUAL:
+		psoDesc.DepthStencilState.DepthEnable = TRUE;
+		psoDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
+		break;
+	case DEPTH_STENCIL_TYPE::GREATER:
+		psoDesc.DepthStencilState.DepthEnable = TRUE;
+		psoDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_GREATER;
+		break;
+	case DEPTH_STENCIL_TYPE::GREATER_EQUAL:
+		psoDesc.DepthStencilState.DepthEnable = TRUE;
+		psoDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_GREATER_EQUAL;
+		break;
+	}
 
 	DEVICE->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&mPipelineState));
 }
