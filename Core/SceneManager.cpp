@@ -69,7 +69,8 @@ std::shared_ptr<Scene> SceneManager::LoadTestScene()
 		std::shared_ptr<Texture> texture = GET_SINGLETON(ResourceManager)->Load<Texture>(L"veigar", L"..\\Resources\\Textures\\veigar.jpg");
 		shader->Init(L"..\\Resources\\Shaders\\default.hlsli");
 		std::shared_ptr<Material> material = std::make_shared<Material>();
-		material->Init(shader, texture);
+		material->SetShader(shader);
+		material->SetTexture(texture, TEXTURE_TYPE::DIFFUSE_MAP);
 		meshRenderer->SetMaterial(material);
 
 		sphere->AddComponent(meshRenderer);
@@ -90,7 +91,8 @@ std::shared_ptr<Scene> SceneManager::LoadTestScene()
 		std::shared_ptr<Texture> texture = GET_SINGLETON(ResourceManager)->Load<Texture>(L"Waffle", L"..\\Resources\\Textures\\Waffle.jpg");
 		shader->Init(L"..\\Resources\\Shaders\\default.hlsli");
 		std::shared_ptr<Material> material = std::make_shared<Material>();
-		material->Init(shader, texture);
+		material->SetShader(shader);
+		material->SetTexture(texture, TEXTURE_TYPE::DIFFUSE_MAP);
 		meshRenderer->SetMaterial(material);
 
 		cube->AddComponent(meshRenderer);
@@ -105,7 +107,7 @@ std::shared_ptr<Scene> SceneManager::LoadTestScene()
 		light->AddComponent(std::make_shared<Light>());
 		light->GetLight()->SetLightDirection(vec3(0.f, 0.f, 1.f));
 		light->GetLight()->SetLightType(LIGHT_TYPE::DIRECTIONAL_LIGHT);
-		light->GetLight()->SetDiffuse(vec3(1.f, 0.1f, 0.1f));
+		light->GetLight()->SetDiffuse(vec3(1.f, 1.0f, 1.0f));
 		light->GetLight()->SetAmbient(vec3(0.1f, 0.f, 0.f));
 		light->GetLight()->SetSpecular(vec3(0.1f, 0.1f, 0.1f));
 		scene->AddGameObject(light);

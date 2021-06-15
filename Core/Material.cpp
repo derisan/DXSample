@@ -9,15 +9,22 @@ Material::Material()
 
 }
 
-void Material::Init(std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture)
+
+
+void Material::SetTexture(std::shared_ptr<Texture> texture, TEXTURE_TYPE type)
 {
-	mShader = std::move(shader);
-	mTexture = std::move(texture);
+	uint8 idx = static_cast<uint8>(type);
+	mTextures[idx] = texture;
+	mTextureCount++;
 }
 
 void Material::Render()
 {
 	mShader->Render();
-	mTexture->Render();
+
+	for (int i = 0; i < mTextureCount; i++)
+	{
+		mTextures[i]->Render(i);
+	}
 }
 

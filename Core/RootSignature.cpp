@@ -13,8 +13,8 @@ void RootSignature::Init(ComPtr<ID3D12Device> device)
 	CD3DX12_ROOT_PARAMETER params[4];
 	params[ROOT_PARAMS_WORLD].InitAsConstantBufferView(0);
 	params[ROOT_PARAMS_VIEWPROJ].InitAsConstantBufferView(1);
-	params[ROOT_PARAMS_TEXTURE].InitAsDescriptorTable(_countof(ranges), ranges, D3D12_SHADER_VISIBILITY_PIXEL);
 	params[ROOT_PARAMS_LIGHT].InitAsConstantBufferView(2);
+	params[ROOT_PARAMS_DIFFUSE].InitAsDescriptorTable(_countof(ranges), ranges, D3D12_SHADER_VISIBILITY_PIXEL);
 
 	D3D12_ROOT_SIGNATURE_DESC sigDesc = CD3DX12_ROOT_SIGNATURE_DESC(_countof(params), params, 1,
 		&CD3DX12_STATIC_SAMPLER_DESC(0), D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);

@@ -14,11 +14,11 @@ void Texture::Init(const std::wstring& path)
 	createView();
 }
 
-void Texture::Render()
+void Texture::Render(int paramIdx)
 {
 	ID3D12DescriptorHeap* ppHeaps[] = { mSrvHeap.Get() };
 	CMD_LIST->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
-	CMD_LIST->SetGraphicsRootDescriptorTable(ROOT_PARAMS_TEXTURE, mSrvHeap->GetGPUDescriptorHandleForHeapStart());
+	CMD_LIST->SetGraphicsRootDescriptorTable(ROOT_PARAMS_DIFFUSE + paramIdx, mSrvHeap->GetGPUDescriptorHandleForHeapStart());
 }
 
 void Texture::Load(const std::wstring& path)
