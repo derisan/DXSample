@@ -11,6 +11,7 @@
 #include "Transform.h"
 #include "TestCameraScript.h"
 #include "ResourceManager.h"
+#include "Light.h"
 
 void SceneManager::Update()
 {
@@ -61,7 +62,6 @@ std::shared_ptr<Scene> SceneManager::LoadTestScene()
 	{
 		std::shared_ptr<GameObject> sphere = std::make_shared<GameObject>();
 		sphere->AddComponent(std::make_shared<Transform>());
-		
 		std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>();
 		std::shared_ptr<Mesh> sphereMesh = GET_SINGLETON(ResourceManager)->LoadSphereMesh();
 		meshRenderer->SetMesh(sphereMesh);
@@ -97,6 +97,20 @@ std::shared_ptr<Scene> SceneManager::LoadTestScene()
 
 		cube->AddComponent(meshRenderer);
 		scene->AddGameObject(cube);
+	}
+#pragma endregion
+
+#pragma region Directional Light
+	{
+		std::shared_ptr<GameObject> light = std::make_shared<GameObject>();
+		light->AddComponent(std::make_shared<Transform>());
+		light->AddComponent(std::make_shared<Light>());
+		light->GetLight()->SetLightDirection(vec3(0.f, 0.f, 1.f));
+		light->GetLight()->SetLightType(LIGHT_TYPE::DIRECTIONAL_LIGHT);
+		light->GetLight()->SetDiffuse(vec3(1.f, 0.1f, 0.1f));
+		light->GetLight()->SetAmbient(vec3(0.1f, 0.f, 0.f));
+		light->GetLight()->SetSpecular(vec3(0.1f, 0.1f, 0.1f));
+		scene->AddGameObject(light);
 	}
 #pragma endregion
 

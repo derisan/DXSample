@@ -41,7 +41,23 @@ PS_INPUT VS_Main(VS_INPUT input)
 
 float4 PS_Main(PS_INPUT input) : SV_Target
 {
-    float4 color = texImage.Sample(samplerType, input.uv);
+    //float4 color = texImage.Sample(samplerType, input.uv);
+    float4 color = float4(1.0f, 1.0f, 1.0f, 1.0f);
+    
+    
+    LightColor totalColor = (LightColor)0;
+    
+    for (int i = 0; i < gLightCount; i++)
+    {
+        LightColor color = CalculateLightColor(i, input.viewNormal, input.viewPos);
+        totalColor.diffuse += color.diffuse;
+        totalColor.ambient += color.ambient;
+        totalColor.specular += color.specular;
+    }
+    
+    color.xyz = (totalColor.diffuse.xyz * color.xyz)
+        + totalColor.ambient.xyz * color.xyz
+        + totalColor.specular.xyz;
     
     return color;
 }
