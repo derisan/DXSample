@@ -21,6 +21,11 @@ void Texture::Render()
 	CMD_LIST->SetGraphicsRootDescriptorTable(ROOT_PARAMS_TEXTURE, mSrvHeap->GetGPUDescriptorHandleForHeapStart());
 }
 
+void Texture::Load(const std::wstring& path)
+{
+	Init(path);
+}
+
 void Texture::createTexture(const std::wstring& path)
 {
 	// 파일 확장자 얻기

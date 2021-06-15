@@ -40,9 +40,9 @@ inline std::shared_ptr<T> ResourceManager::Load(const std::wstring& key, const s
 
 	auto findIt = keyObjMap.find(key);
 	if (findIt != keyObjMap.end())
-		return static_pointer_cast<T>(findIt->second);
+		return std::static_pointer_cast<T>(findIt->second);
 
-	shared_ptr<T> object = make_shared<T>();
+	std::shared_ptr<T> object = std::make_shared<T>();
 	object->Load(path);
 	keyObjMap[key] = object;
 

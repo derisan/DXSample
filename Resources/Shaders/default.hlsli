@@ -41,9 +41,7 @@ PS_INPUT VS_Main(VS_INPUT input)
 
 float4 PS_Main(PS_INPUT input) : SV_Target
 {
-    //float4 color = texImage.Sample(samplerType, input.uv);
-    float4 color = float4(1.0f, 1.0f, 1.0f, 1.0f);
-    
+    float4 color = texImage.Sample(samplerType, input.uv);
     
     LightColor totalColor = (LightColor)0;
     

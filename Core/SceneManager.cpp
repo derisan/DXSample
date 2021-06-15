@@ -66,9 +66,8 @@ std::shared_ptr<Scene> SceneManager::LoadTestScene()
 		std::shared_ptr<Mesh> sphereMesh = GET_SINGLETON(ResourceManager)->LoadSphereMesh();
 		meshRenderer->SetMesh(sphereMesh);
 		std::shared_ptr<Shader> shader = std::make_shared<Shader>();
-		std::shared_ptr<Texture> texture = std::make_shared<Texture>();
+		std::shared_ptr<Texture> texture = GET_SINGLETON(ResourceManager)->Load<Texture>(L"veigar", L"..\\Resources\\Textures\\veigar.jpg");
 		shader->Init(L"..\\Resources\\Shaders\\default.hlsli");
-		texture->Init(L"..\\Resources\\Textures\\veigar.jpg");
 		std::shared_ptr<Material> material = std::make_shared<Material>();
 		material->Init(shader, texture);
 		meshRenderer->SetMaterial(material);
@@ -88,9 +87,8 @@ std::shared_ptr<Scene> SceneManager::LoadTestScene()
 		std::shared_ptr<Mesh> cubeMesh = GET_SINGLETON(ResourceManager)->LoadCubeMesh();
 		meshRenderer->SetMesh(cubeMesh);
 		std::shared_ptr<Shader> shader = std::make_shared<Shader>();
-		std::shared_ptr<Texture> texture = std::make_shared<Texture>();
+		std::shared_ptr<Texture> texture = GET_SINGLETON(ResourceManager)->Load<Texture>(L"Waffle", L"..\\Resources\\Textures\\Waffle.jpg");
 		shader->Init(L"..\\Resources\\Shaders\\default.hlsli");
-		texture->Init(L"..\\Resources\\Textures\\veigar.jpg");
 		std::shared_ptr<Material> material = std::make_shared<Material>();
 		material->Init(shader, texture);
 		meshRenderer->SetMaterial(material);
