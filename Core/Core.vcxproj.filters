@@ -190,23 +190,25 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Resources\Shaders\default.hlsli">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="..\vendor\inc\DirectXTex\DirectXTex.inl">
       <Filter>Utils</Filter>
     </None>
     <None Include="SimpleMath.inl">
       <Filter>Utils</Filter>
     </None>
-    <None Include="..\Resources\Shaders\params.hlsli">
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Resources\Shaders\skybox.fx">
       <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\Resources\Shaders\utils.hlsli">
+    </FxCompile>
+    <FxCompile Include="..\Resources\Shaders\utils.fx">
       <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\Resources\Shaders\skybox.hlsli">
+    </FxCompile>
+    <FxCompile Include="..\Resources\Shaders\default.fx">
       <Filter>Shaders</Filter>
-    </None>
+    </FxCompile>
+    <FxCompile Include="..\Resources\Shaders\params.fx">
+      <Filter>Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

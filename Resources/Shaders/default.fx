@@ -1,8 +1,8 @@
-#ifndef _DEFAULT_HLSLI_
-#define _DEFAULT_HLSLI_
+#ifndef _DEFAULT_fx_
+#define _DEFAULT_fx_
 
-#include "params.hlsli"
-#include "utils.hlsli"
+#include "params.fx"
+#include "utils.fx"
 
 struct VS_INPUT
 {
