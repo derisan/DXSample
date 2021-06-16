@@ -26,6 +26,7 @@ public:
 
 	std::shared_ptr<Mesh> LoadCubeMesh();
 	std::shared_ptr<Mesh> LoadSphereMesh();
+	std::shared_ptr<Mesh> LoadTerrainMesh(int32 sizeX = 15, int32 sizeZ = 15);
 
 private:
 	using KeyObjMap = std::map<std::wstring, std::shared_ptr<Object>>;

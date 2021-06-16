@@ -52,7 +52,7 @@ void Mesh::Init(const std::vector<Vertex>& vertices, const std::vector<uint32>& 
 
 void Mesh::Render()
 {
-	CMD_LIST->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	CMD_LIST->IASetPrimitiveTopology(mTopology);
 	CMD_LIST->IASetVertexBuffers(0, 1, &mVertexBufferView);
 	CMD_LIST->IASetIndexBuffer(&mIndexBufferView);
 	CMD_LIST->DrawIndexedInstanced(mIndexCount, 1, 0, 0, 0);

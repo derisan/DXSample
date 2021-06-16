@@ -1,5 +1,6 @@
 #include "CorePch.h"
 #include "ResourceManager.h"
+#include "Terrain.h"
 
 std::shared_ptr<Mesh> ResourceManager::LoadCubeMesh()
 {
@@ -188,4 +189,58 @@ std::shared_ptr<Mesh> ResourceManager::LoadSphereMesh()
 	Add(L"Sphere", mesh);
 
 	return mesh;
+}
+
+std::shared_ptr<Mesh> ResourceManager::LoadTerrainMesh(int32 sizeX, int32 sizeZ)
+{
+	std::shared_ptr<Mesh> findMesh = Get<Mesh>(L"Terrain");
+	if (findMesh)
+	{
+		return findMesh;
+	}
+
+	//std::vector<Vertex> vec;
+
+	//for (int32 z = 0; z < sizeZ + 1; z++)
+	//{
+	//	for (int32 x = 0; x < sizeX + 1; x++)
+	//	{
+	//		Vertex vtx;
+	//		vtx.Position = vec3(static_cast<float>(x), 0, static_cast<float>(z));
+	//		vtx.UV = vec2(static_cast<float>(x), static_cast<float>(sizeZ - z));
+	//		vtx.Normal = vec3(0.f, 1.f, 0.f);
+	//		vtx.Tangent = vec3(1.f, 0.f, 0.f);
+
+	//		vec.push_back(vtx);
+	//	}
+	//}
+
+	//std::vector<uint32> idx;
+
+	//for (int32 z = 0; z < sizeZ; z++)
+	//{
+	//	for (int32 x = 0; x < sizeX; x++)
+	//	{
+	//		//  [0]
+	//		//   |	\
+	//		//  [2] - [1]
+	//		idx.push_back((sizeX + 1) * (z + 1) + (x));
+	//		idx.push_back((sizeX + 1) * (z)+(x + 1));
+	//		idx.push_back((sizeX + 1) * (z)+(x));
+	//		//  [1] - [2]
+	//		//   	\  |
+	//		//		  [0]
+	//		idx.push_back((sizeX + 1) * (z)+(x + 1));
+	//		idx.push_back((sizeX + 1) * (z + 1) + (x));
+	//		idx.push_back((sizeX + 1) * (z + 1) + (x + 1));
+	//	}
+	//}
+	//
+	//std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
+	//mesh->Init(vec, idx);
+	//Add(L"Terrain", mesh);
+	//return mesh;
+
+	std::unique_ptr<Terrain> terrain = std::make_unique<Terrain>();
+	return terrain->Init("..//Resources//Textures//heightmap01.bmp");
 }

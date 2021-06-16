@@ -111,6 +111,9 @@
     <ClInclude Include="Scene.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>Object\Resource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CorePch.cpp">
@@ -188,6 +191,9 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>Object\Resource</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\vendor\inc\DirectXTex\DirectXTex.inl">
@@ -208,6 +214,9 @@
       <Filter>Shaders</Filter>
     </FxCompile>
     <FxCompile Include="..\Resources\Shaders\params.fx">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resources\Shaders\terrain.fx">
       <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>

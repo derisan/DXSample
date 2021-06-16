@@ -72,7 +72,7 @@ std::shared_ptr<Scene> SceneManager::LoadTestScene()
 		std::shared_ptr<Material> material = std::make_shared<Material>();
 		material->SetShader(shader);
 		material->SetTexture(texture, TEXTURE_TYPE::DIFFUSE_MAP);
-		material->SetTexture(tex2, TEXTURE_TYPE::NORMAL_MAP	);
+		material->SetTexture(tex2, TEXTURE_TYPE::NORMAL_MAP);
 		meshRenderer->SetMaterial(material);
 
 		sphere->AddComponent(meshRenderer);
@@ -109,7 +109,7 @@ std::shared_ptr<Scene> SceneManager::LoadTestScene()
 		std::shared_ptr<GameObject> light = std::make_shared<GameObject>();
 		light->AddComponent(std::make_shared<Transform>());
 		light->AddComponent(std::make_shared<Light>());
-		light->GetLight()->SetLightDirection(vec3(1.f, 0.f, 1.f));
+		light->GetLight()->SetLightDirection(vec3(1.f, -0.5f, 1.f));
 		light->GetLight()->SetLightType(LIGHT_TYPE::DIRECTIONAL_LIGHT);
 		light->GetLight()->SetDiffuse(vec3(1.0f, 1.0f, 1.0f));
 		light->GetLight()->SetAmbient(vec3(0.1f, 0.1f, 0.1f));
@@ -118,28 +118,51 @@ std::shared_ptr<Scene> SceneManager::LoadTestScene()
 	}
 #pragma endregion
 
-#pragma region Skybox
-	std::shared_ptr<GameObject> skybox = std::make_shared<GameObject>();
-	skybox->AddComponent(std::make_shared<Transform>());
-	std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>();
+ #pragma region Skybox
+ 	std::shared_ptr<GameObject> skybox = std::make_shared<GameObject>();
+ 	skybox->AddComponent(std::make_shared<Transform>());
+ 	std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>();
+ 	{
+ 		std::shared_ptr<Mesh> sphereMesh = GET_SINGLETON(ResourceManager)->LoadSphereMesh();
+ 		meshRenderer->SetMesh(sphereMesh);
+ 	}
+ 	{
+ 		std::shared_ptr<Shader> shader = std::make_shared<Shader>();
+ 		shader->Init(L"..\\Resources\\Shaders\\skybox.fx",
+ 				{ RASTERIZER_TYPE::CULL_NONE, DEPTH_STENCIL_TYPE::LESS_EQUAL });
+ 		std::shared_ptr<Texture> tex = GET_SINGLETON(ResourceManager)->Load<Texture>(L"Skybox", L"..\\Resources\\Textures\\Sky01.jpg");
+ 		std::shared_ptr<Material> material = std::make_shared<Material>();
+ 		material->SetShader(shader);
+ 		material->SetTexture(tex, TEXTURE_TYPE::DIFFUSE_MAP);
+ 		meshRenderer->SetMaterial(material);
+ 	}
+ 	skybox->AddComponent(meshRenderer);
+ 	scene->AddGameObject(skybox);
+ 
+ #pragma endregion
+
+#pragma region Terrain
 	{
-		std::shared_ptr<Mesh> sphereMesh = GET_SINGLETON(ResourceManager)->LoadSphereMesh();
-		meshRenderer->SetMesh(sphereMesh);
-	}
-	{
+		std::shared_ptr<GameObject> terrain = std::make_shared<GameObject>();
+		terrain->AddComponent(std::make_shared<Transform>());
+		terrain->GetTransform()->SetLocalPosition(vec3(0.0f, -5.0f, 0.0f));
+		terrain->GetTransform()->SetLocalScale(vec3(1.0f, 1.0f, 1.0f));
+
+		std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>();
+		std::shared_ptr<Mesh> terrainMesh = GET_SINGLETON(ResourceManager)->LoadTerrainMesh();
+		terrainMesh->SetTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+		meshRenderer->SetMesh(terrainMesh);
 		std::shared_ptr<Shader> shader = std::make_shared<Shader>();
-		shader->Init(L"..\\Resources\\Shaders\\skybox.fx",
-				{ RASTERIZER_TYPE::CULL_NONE, DEPTH_STENCIL_TYPE::LESS_EQUAL });
-		std::shared_ptr<Texture> tex = GET_SINGLETON(ResourceManager)->Load<Texture>(L"Skybox", L"..\\Resources\\Textures\\Sky01.jpg");
+		shader->Init(L"..\\Resources\\Shaders\\terrain.fx");
+		std::shared_ptr<Texture> texture = GET_SINGLETON(ResourceManager)->Load<Texture>(L"Terrain", L"..\\Resources\\Textures\\terrain.png");
 		std::shared_ptr<Material> material = std::make_shared<Material>();
 		material->SetShader(shader);
-		material->SetTexture(tex, TEXTURE_TYPE::DIFFUSE_MAP);
+		material->SetTexture(texture, TEXTURE_TYPE::DIFFUSE_MAP);
 		meshRenderer->SetMaterial(material);
+		terrain->AddComponent(meshRenderer);
+		scene->AddGameObject(terrain);
 	}
-	skybox->AddComponent(meshRenderer);
-	scene->AddGameObject(skybox);
-
 #pragma endregion
 
-		return scene;
+	return scene;
 }
